@@ -1,0 +1,51 @@
+Sezione Amministrativa
+Inserire gli eventi
+Controllare chi è registrato
+Bannare un utente
+
+
+L'amministratore gestisce le quote
+
+La home deve contenere solo eventi del giorno
+
+Chi scommette maggiorenne (Sei maggiorenne? si no)
+
+
+Esito: 1x2 per calcio (vince squadra 1 o pareggia o vince squadra 2)
+classifica primi 3 per cavalli
+
+
+Eventi (non + di 3 sport)
+
+
+
+Deposito e Prelievo
+
+2 tabelle (1 per l'esito del calcio e l'altra per gli altri sport)
+
+
+
+
+MUST:
+Sport: CALCIO,VOLLEY,BASKET
+Gli eventi sportivi avvengono tutti nella stessa giornata
+La giocata può essere effettuata solo da chi è loggato e ha soldi
+Chi scommette maggiorenne (Sei maggiorenne? si / no)
+Il sistema deve gestire un conto: (deposita e preleva)
+L'amministratore Inserisce gli eventi
+L'amministratore può bannare/sbannare
+Visualizzazione di eventi anche se non registrato
+Genera Giornata sportiva (generati tutti i risultati degli sport)
+Area personale utente (profilo + scommesse effettuate)
+AlLa generazione degli eventi le partite sono tutte finite 
+
+
+
+
+SHOULD:
+
+
+
+MAY:
+Responsive (Bootstrap)
+Possibilità di chiudere il conto da parte dell'utente
