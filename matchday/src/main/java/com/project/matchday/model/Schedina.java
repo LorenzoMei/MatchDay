@@ -6,7 +6,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "schedina")
 public class Schedina {
-	@id
+	@Id
 	private int idSchedina;
 	private double importo;
 	private Utente utente;
@@ -28,7 +28,7 @@ public class Schedina {
     }
     
 	@Column(name = "fk_utente")
-    public double getUtente() {
+    public Utente getUtente() {
 		return utente;
     }
     public void setUtente(Utente utente) {
