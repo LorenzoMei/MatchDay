@@ -1,0 +1,46 @@
+package com.project.matchday.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "quote")
+public class Quota {
+	private int idQuota;
+	private float quotaCasa;
+	private float quotaPareggio;
+	private float quotaOspite;
+	
+	public Quota() {
+	}
+	
+	public Quota(float quotaCasa, float quotaPareggio, float quotaOspite) {
+		this.quotaCasa = quotaCasa;
+		this.quotaPareggio = quotaPareggio;
+		this.quotaOspite = quotaOspite;
+	}
+
+	@Column(name = "quota_casa")
+    public float getQuotaCasa() {
+		return quotaCasa;
+    }
+    public void setQuotaCasa(float quotaCasa) {
+		this.quotaCasa = quotaCasa;
+    }
+    
+	@Column(name = "quota_pareggio")
+    public float getQuotaPareggio() {
+		return quotaPareggio;
+    }
+    public void setQuotaPareggio(float quotaPareggio) {
+		this.quotaPareggio = quotaPareggio;
+    }
+    
+	@Column(name = "quota_ospite")
+    public float getQuotaOspite() {
+		return quotaOspite;
+    }
+    public void setQuotaOspite(float quotaOspite) {
+		this.quotaOspite = quotaOspite;
+    }
+}
