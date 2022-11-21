@@ -2,17 +2,27 @@ package com.project.matchday.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "eventi")
 public class Evento {
+	@Id
 	private int idEvento;
 	private String squadraCasa;
 	private String squadraOspite;
 	private String tipo;
 	private Date data;
+	@OneToOne
+	@JoinColumn(name = "idquote")
 	private Quota quota;
 
 	public Evento() {
@@ -51,6 +61,7 @@ public class Evento {
     }
     
 	@Column(name = "data")
+	@Temporal(TemporalType.TIMESTAMP)
     public Date getData() {
 		return data;
     }

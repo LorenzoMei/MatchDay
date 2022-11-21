@@ -1,11 +1,15 @@
 package com.project.matchday.model;
 
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "quote")
 public class Quota {
+	@Id
 	private int idQuota;
 	private float quotaCasa;
 	private float quotaPareggio;
