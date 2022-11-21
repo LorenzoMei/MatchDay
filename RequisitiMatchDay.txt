@@ -43,9 +43,8 @@ AlLa generazione degli eventi le partite sono tutte finite
 
 
 SHOULD:
-
+Responsive (Bootstrap)
 
 
 MAY:
-Responsive (Bootstrap)
 Possibilità di chiudere il conto da parte dell'utente
