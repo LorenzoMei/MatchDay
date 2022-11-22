@@ -10,6 +10,9 @@ import javax.persistence.Table;
 @Table(name = "quote")
 public class Quota {
 	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	@Column(name = "idquote")
 	private int idQuota;
 	private float quotaCasa;
 	private float quotaPareggio;
