@@ -47,7 +47,7 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	public void preleva(String email, Double importo) {
 		if(utente.getSaldo() >= importo) {
 		Double saldo = utente.getSaldo() - importo;
-		setSaldoByEmail(email,saldo);
+		profiloRep.setSaldoByEmail(email,saldo);
 		}
 		else {
 			System.out.println("Saldo insufficiente");
@@ -56,7 +56,7 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	
 	public void deposita(String email, Double importo) {
 		Double saldo = utente.getSaldo() + importo;
-		setSaldoByEmail(email,saldo);
+		profiloRep.setSaldoByEmail(email,saldo);
 	}
 	
 		
