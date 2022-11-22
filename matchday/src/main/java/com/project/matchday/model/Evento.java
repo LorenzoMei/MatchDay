@@ -1,16 +1,21 @@
 package com.project.matchday.model;
 
+
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "eventi")
@@ -24,8 +29,8 @@ public class Evento {
 	private String squadraOspite;
 	private String tipo;
 	private Date data;
-	@OneToOne
-	@JoinColumn(name = "idquote")
+	@ManyToOne
+	@JoinColumn(name = "fk_quote", referencedColumnName="idquote")
 	private Quota quota;
 
 	public Evento() {
@@ -38,7 +43,7 @@ public class Evento {
 		this.data = data;
 		this.quota = quota;
 	}
-
+    
 	@Column(name = "squadra_casa")
     public String getSquadraCasa() {
 		return squadraCasa;
