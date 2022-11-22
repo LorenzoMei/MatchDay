@@ -4,3 +4,4 @@
 
 -AGGIORNARE IL NOME DI EVENTUALI METODI (esempio: In profiloRepository getSchedineUtente è diventato getSchedineByEmail)
 
+in sql stato = 0 = false
