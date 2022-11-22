@@ -1,4 +1,4 @@
-package com.project.matchday.repository;
+package com.project.matchday.interfaces;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
