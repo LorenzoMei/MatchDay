@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="../../../resources/static/css/home.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<title>TEST</title>
+</head>
+<body>
+	
+	<div>
+		<form method="post" action="test/{email}">
+		<table>
+			<tr>
+				<th>Utente</th>
+			</tr>
+			<th:block th:each="utente : ${listaUtenti}">
+				<tr>
+		            <td th:text=${utente.nome}>   </td>
+		            <td th:text=${utente.cognome}>  </td>
+		            <td th:text=${utente.email} th:field="*{email}">   </td>
+		            <td th:text=${utente.saldo}>   </td>
+		            <td th:if="${utente.isStatoAttivo}"> Attivo  </td>
+		            <td th:if="${!utente.isStatoAttivo}"> Bannato  </td>
+	            </tr>
+	         </th:block>
+		</table>
+		
+		
+		<input type="submit" value="Banna"></input>
+		</form>
+		
+	</div>
+</body>
+</html>
