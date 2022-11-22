@@ -16,6 +16,9 @@ import javax.persistence.TemporalType;
 @Table(name = "eventi")
 public class Evento {
 	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	@Column(name = "ideventi")
 	private int idEvento;
 	private String squadraCasa;
 	private String squadraOspite;
