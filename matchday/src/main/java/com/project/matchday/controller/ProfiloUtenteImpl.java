@@ -1,66 +1,70 @@
 package com.project.matchday.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.project.matchday.model.Schedina;
 import com.project.matchday.model.Utente;
 import com.project.matchday.interfaces.ProfiloRepository;
 import com.project.matchday.interfaces.ProfiloUtenteService;
+import com.project.matchday.interfaces.UserRepository;
 
 @Controller
 @SessionAttributes("utente")
 public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	
-	private Utente utente;
-	private Schedina schedina;
+
+
 	@Autowired
 	private ProfiloRepository profiloRep;
+	@Autowired
+	private UserRepository userRep;
 	
-	public ArrayList<Schedina> visualizzaSchedine(String email){
-		ArrayList<Schedina> schedinaList = profiloRep.getSchedineByEmail(email);
+	@Override
+	public List<Schedina> visualizzaSchedine(String email){
+		Utente utente = visualizzaProfilo(email);
+		List<Schedina> schedinaList = profiloRep.getSchedineByUtente(utente);
+		System.out.println(schedinaList.size());
 		return schedinaList;
 	}
-	
-	public Utente visualizzaProfilo() {
-		return utente;
+	@Override
+	public Utente visualizzaProfilo(String email) {
+		return userRep.findByEmail(email);
+		
 	}
-	
+	@Override
 	public void giocaSchedina(Schedina s) {
 		
 		profiloRep.save(s);
 	}
-	
+	@Override
 	public void preleva(String email, Double importo) {
+		Utente utente = visualizzaProfilo(email);
 		if(utente.getSaldo() >= importo) {
 		Double saldo = utente.getSaldo() - importo;
-		profiloRep.setSaldoByEmail(email,saldo);
+		utente.setSaldo(saldo);
+		userRep.save(utente);
 		}
 		else {
 			System.out.println("Saldo insufficiente");
 		}
 	}
-	
+	@Override
 	public void deposita(String email, Double importo) {
+		Utente utente = visualizzaProfilo(email);
 		Double saldo = utente.getSaldo() + importo;
-		profiloRep.setSaldoByEmail(email,saldo);
+		utente.setSaldo(saldo);
+		userRep.save(utente);
 	}
-	
+
+
 		
 		
 }
 	
-
