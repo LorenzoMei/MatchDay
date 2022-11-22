@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="../../../resources/static/css/home.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<title>Home</title>
+</head>
+<body>
+	
+	<div>
+
+		<table>
+			<tr>
+				<th>Evento</th>
+			</tr>
+			<th:block th:each="evento : ${listaEventi}">
+				<tr>
+		            <td th:text=${evento.squadraCasa}>1</td>
+		            <td><a href="#" th:text=${evento.squadraOspite}>Title ...</a></td>
+		            <td th:text=${evento.data}>Text ...</td>
+	            </tr>
+	         </th:block>
+		</table>
+		
+	</div>
+</body>
+</html>
