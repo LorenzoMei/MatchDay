@@ -1,4 +1,4 @@
-package interfaces;
+package com.project.matchday.interfaces;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import com.project.matchday.Utente;
+import com.project.matchday.model.Utente;
 import com.project.matchday.model.Schedina;
 
 

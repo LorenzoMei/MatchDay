@@ -1,4 +1,4 @@
-package com.project.matchday;
+package com.project.matchday.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.project.matchday.model.Schedina;
-
-import interfaces.ProfiloRepository;
-import interfaces.ProfiloUtenteService;
+import com.project.matchday.model.Utente;
+import com.project.matchday.interfaces.ProfiloRepository;
+import com.project.matchday.interfaces.ProfiloUtenteService;
 
 @Controller
 @SessionAttributes("utente")
@@ -41,7 +41,7 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	
 	public void giocaSchedina(Schedina s) {
 		
-		schedina.save(s);
+		profiloRep.save(s);
 	}
 	
 	public void preleva(String email, Double importo) {
