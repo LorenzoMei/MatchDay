@@ -7,6 +7,9 @@ import javax.persistence.Table;
 @Table(name = "role")
 public class Role {
 	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	@Column(name = "idrole")
 	private int idRole;
 	private String role;
 	
