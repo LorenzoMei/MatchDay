@@ -3,7 +3,6 @@ package interfaces;
 import java.util.ArrayList;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import com.project.matchday.Utente;
 import com.project.matchday.model.Schedina;
