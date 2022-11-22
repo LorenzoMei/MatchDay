@@ -12,11 +12,12 @@ public interface AdminService{
 
 	public ArrayList<Utente> visualizzaUtenti();
 	
-	public void banna();
+	public void banna(String email);
 	
-	public void sbanna();
+	public void sbanna(String email);
 	
-	public Evento aggiungiEvento(Evento evento);
+	public void aggiungiEvento(Evento evento);
 	
 	public void generaRisultati();
 }
+
