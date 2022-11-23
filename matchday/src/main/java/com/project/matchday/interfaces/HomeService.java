@@ -2,9 +2,11 @@ package com.project.matchday.interfaces;
 
 import java.util.ArrayList;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import com.project.matchday.model.Evento;
 
 public interface HomeService {
 	
-	ArrayList<Evento> visualizzaEventiPerTipo(String tipo);
+	ModelAndView visualizzaEventiPerTipo(String tipo);
 }
