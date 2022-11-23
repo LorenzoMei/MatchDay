@@ -13,10 +13,50 @@
 <title>Home</title>
 </head>
 <body>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	
-	<div>
-
-		<table>
+	  <div class="container-fluid">
+	    <!-- Links -->
+	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" href="home?tipo=calcio">Calcio</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="home?tipo=pallavolo">Pallavolo</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="home?tipo=basket">Basket</a>
+	      </li>
+	    </ul>
+	  </div>
+	  
+	  <div class="container-fluid">
+	  	<a class="navbar-brand" href="home" style="position:fixed; right:0">MatchDay</a>
+	  </div>
+	
+	</nav>
+	
+	
+	<div class="container">
+		<div class="row">
+	    	<div class="col-*-4">
+	    	</div>
+	    	<div class="col-*-4">
+	    		<br>
+	    		<div class="card" th:each="evento : ${listaEventi}">
+				  <div class="card-body">
+				    <h4 class="card-title" th:text=${evento.squadraCasa}></h4>
+				    <h4 class="card-title" th:text=${evento.squadraOspite}></h4>
+				    <h4 class="card-title" th:text=${evento.data}></h4>
+				    <p class="card-text">Some example text. Some example text.</p>
+				    <a href="#" class="card-link">Card link</a>
+				  </div>
+				</div>
+	    	</div>
+	    	<div class="col-*-4">
+	    	</div>
+	 	</div>
+		<!--  <table>
 			<tr>
 				<th>Evento</th>
 			</tr>
@@ -27,7 +67,7 @@
 		            <td th:text=${evento.data}>Text ...</td>
 	            </tr>
 	         </th:block>
-		</table>
+		</table>-->
 		
 	</div>
 </body>
