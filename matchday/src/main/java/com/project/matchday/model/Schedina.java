@@ -17,6 +17,8 @@ public class Schedina {
 	@Column(name = "idschedina")
 	private int idSchedina;
 	private double importo;
+	@ManyToOne
+	@JoinColumn(name = "fk_utente", referencedColumnName="idutente")
 	private Utente utente;
 	
 	public Schedina() {
