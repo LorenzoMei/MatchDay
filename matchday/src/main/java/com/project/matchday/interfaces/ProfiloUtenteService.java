@@ -1,6 +1,7 @@
 package com.project.matchday.interfaces;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.project.matchday.model.Utente;
 
@@ -14,11 +15,12 @@ import com.project.matchday.model.Schedina;
 public interface ProfiloUtenteService {
 	
 
-	List<Schedina> visualizzaSchedine(String email);
-    Utente visualizzaProfilo(String email);
+	List<Schedina> visualizzaSchedine();
 	void giocaSchedina(Schedina schedina);
-	void preleva(String email, Double importo);
-	void deposita(String email, Double importo);
+	void preleva(Double importo);
+	void deposita(Double importo);
+	Utente visualizzaProfilo();
+
 	
 
 }
