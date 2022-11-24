@@ -3718,7 +3718,7 @@ textarea.form--control:focus {
 
     .betslip__body {
         max-height: calc(100vh - 231px);
-        background: hsl(var(--base)/0.05);
+        background: whitesmoke;
         padding-left: 0.3rem;
         padding-right: 0.3rem;
     }
@@ -5700,8 +5700,4 @@ html, body
     width: 100%;
 }
 
-a.sport
-{
-	color: white;
-}
 /*# sourceMappingURL=main.css.map */
