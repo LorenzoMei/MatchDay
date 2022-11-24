@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" href="../../../resources/static/css/home.css">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 
@@ -17,12 +17,19 @@
 	 <!-- A grey horizontal navbar that becomes vertical on small screens -->
 	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 	
+	
+
+	 
+	 
+
 	  <div class="container-fluid">
       	<a class="navbar-brand" href="home" style="position:fixed; right:0;">MatchDay</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
-    
+  
+  
+  
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
     
       <ul class="navbar-nav">
@@ -32,20 +39,37 @@
       </li>
       
       
+      
         <li class="nav-item dropdowns">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">Deposita</a>
+          <form class="navbar-form navbar-left" action="/deposita" method="post">
           <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#"><input type="number" name="numDep" placeholder = "Inserire cifra Deposito"></a></li>
-          <li><a class="dropdown-item" href="profiloUtente"><input type="submit" value="Submit"></a></li>
+          <li> <a class="dropdown-item" href="#"><input type="number" name="numDep" min="0" placeholder= "Inserire cifra Deposito"></a></li>
+          <li><a class="dropdown-item" href="profiloUtente"><input type="submit" value="Submit"></a></li> 
+             
       	</ul>
-        </li>
+	</form> 
         
+        </li> 
+        
+
+         
+      
+      
+      
         <li class="nav-item dropdowns">
+        
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">Preleva</a>
+          <form class="navbar-form navbar-left" action="/preleva" method="post">
           <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#"><input type="number" name="numDep" placeholder = "Inserire cifra Prelievo"></a></li>
-          <li><a class="dropdown-item" href="profiloUtente"><input type="submit" value="Submit"></a></li>
-      	</ul>	
+          
+          <li><a class="dropdown-item" href="#"><input type="number" name="numPre" min="0" placeholder = "Inserire cifra Prelievo"></a></li>
+          <li><a class="dropdown-item" href="profiloUtente"><input type="submit" value="Submit"> </a>
+          </li>
+         	<li> <a class="dropdown-item" th:text=${risultato}></a></li>
+      	</ul>
+      
+      	</form> 	
           </li>
           
           <li class="nav-item">
@@ -53,12 +77,20 @@
           </li>
           </ul>
   	  </div>
+  	  
+
+  	  
+  	  
   	   </div>
+
+  	   
+  	   
+  	   
   	   	</nav> 
   
 
 
-<div id="myDIV" >  	   
+<div id="myDIV">  	   
 <table class="table">
 	<thead class="thead-dark" >
     <tr>
@@ -67,7 +99,7 @@
     </tr>
     <tr>
       <th scope="col">Cognome</th>
-      <td th:text=${utente.nome}></td>
+      <td th:text=${utente.cognome}></td>
     </tr>
     <tr>
       <th scope="col">Email</th>
