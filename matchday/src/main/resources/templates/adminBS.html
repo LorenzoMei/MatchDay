@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="../../../resources/static/css/home.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<title>TEST</title>
+</head>
+<body>
+	<div>
+
+		<table>
+			<tr>
+				<th  width=20%>UTENTI ATTIVI</th>
+			</tr>
+				<tr> 
+		            <td width=7%>NOME</td>
+		            <td width=7%>COGNOME</td>
+		            <td width=20%>EMAIL</td>
+		            <td width=7%>SALDO</td>  
+	            </tr>
+			<th:block th:each="utente : ${listaUtenti}">
+				<tr th:if="${utente.isStatoAttivo}">
+		            <td th:text=${utente.nome}>   </td>
+		            <td th:text=${utente.cognome}>  </td>
+		            <td th:text=${utente.email} th:name="email">   </td>
+		            <td th:text=${utente.saldo}>   </td>
+		            <td> 
+		            	<form method="post" action="/banna">
+		           			<input type="text" th:value=${utente.email} name="email" readonly hidden>
+		            		<input type="submit" value="Banna">
+		            	</form>  
+		            </td>
+	            </tr>            
+	         </th:block>
+		</table> 
+		<br><br>
+		<table>
+			<tr>
+				<th width=20%>UTENTI BANNATI</th>
+			</tr>
+				<tr> 
+		            <td width=7%>NOME</td>
+		            <td width=7%>COGNOME</td>
+		            <td width=20%>EMAIL</td>
+		            <td width=7%>SALDO</td>  
+	            </tr>
+			<th:block th:each="utente : ${listaUtenti}">
+				<tr th:if="${!utente.isStatoAttivo}">
+		            <td th:text=${utente.nome}>   </td>
+		            <td th:text=${utente.cognome}>  </td>
+		            <td th:text=${utente.email} th:name="email">   </td>
+		            <td th:text=${utente.saldo}>   </td>
+		            <td> 
+		            	<form method="post" action="/sbanna">
+		           			<input type="text" th:value=${utente.email} name="email" readonly hidden>
+		            		<input type="submit" value="Sbanna">
+		            	</form>  
+		            </td>
+	            </tr>            
+	         </th:block>
+		</table>  
+
+	</div>
+</body>
+</html>
