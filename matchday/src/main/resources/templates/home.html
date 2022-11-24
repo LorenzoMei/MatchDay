@@ -49,7 +49,7 @@
 	    			<br>
 	    			
 		    		<div class="card">
-					  <div class="card-body">
+					  <div class="card-body card-shadow">
 					  	<div class="row">
 					  		<div class="col-6">
 					  			<h4 style="margin:1rem 0 1rem">
@@ -67,7 +67,7 @@
 							<div class="col-4">
 								<h6 style="text-align:center">1</h6>
 								<div class="container" style="text-align:center">
-									<button class="container-quote" th:id="'quotaCasa' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaCasa}]], '1')">
+									<button class="container-quote" th:id="'quotaCasa' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaCasa}]], '1', [[${iter.count}]])">
 									[[${evento.quota.quotaCasa}]]
 									</button>
 								</div>
@@ -76,7 +76,7 @@
 							<div class="col-4" th:if="${evento.quota.quotaPareggio != -1}">
 								<h6 style="text-align:center">X</h6>
 								<div class="container" style="text-align:center">
-									<button class="container-quote" th:id="'quotaPareggio' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaPareggio}]], 'X')">
+									<button class="container-quote" th:id="'quotaPareggio' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaPareggio}]], 'X', [[${iter.count}]])">
 										[[${evento.quota.quotaPareggio}]]
 									</button>
 								</div>
@@ -85,7 +85,7 @@
 							<div class="col-4">
 								<h6 style="text-align:center">2</h6>
 								<div class="container" style="text-align:center">
-									<button class="container-quote" th:id="'quotaOspite' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaOspite}]], '2');">
+									<button class="container-quote" th:id="'quotaOspite' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaOspite}]], '2', [[${iter.count}]])">
 										[[${evento.quota.quotaOspite}]]
 									</button>
 								</div>
@@ -104,6 +104,7 @@
 	</div>
 	<!-- La mia schedina  -->
     <div class="betslip">
+    	<br>
         <div class="betslip__head">
             <div class="betslip__head-content"></div>
             <div class="betslip__head-switch">
@@ -112,8 +113,8 @@
             </div>
         </div>
         <div class="betslip__body" data-simplebar>
-            <ul class="list betslip__list">
-                <li>
+            <ul class="list betslip__list" id="betslipList">
+                <!--  <li>
                     <button type="button" class="btn betslip__list-close">
                         <i class="las la-times" id="risultatoGiocato"></i>
                     </button>
@@ -124,26 +125,14 @@
                         <div class="betslip__list-match" id="data"></div>
                     </div>
                     <div class="betslip__list-ratio" id="quotaEvento"></div>
-                </li>
+                </li>-->
             </ul>
         </div>
         <div class="betslip__footer">
             <ul class="list betslip__footer-list">
                 <li>
-                    <span class="betslip__footer-text">
-                        Total Odds
-                    </span>
-                    <span class="betslip__footer-text">
-                        4.5
-                    </span>
-                </li>
-                <li>
-                    <span class="betslip__footer-text">
-                        Total Earning
-                    </span>
-                    <span class="betslip__footer-text">
-                        82021
-                    </span>
+                    <span class="betslip__footer-text">Importo</span>
+                    <span class="betslip__footer-text">       </span>
                 </li>
             </ul>
             <div class="betslip__footer-bottom">
@@ -158,15 +147,63 @@
 </div>
 
 	<script>
-		function aggiungiEventoAllaSchedina(casa, ospite, tipo, data, quota, giocata){
-			var newElement = document.createElement("p");
-			newElement.innerHTML = "CONTENTS";
-			document.getElementById("ID").appendChild(newElement);
+		function aggiungiEventoAllaSchedina(casa, ospite, tipo, data, quota, giocata, id){
+			if(document.getElementById("li"+id) != null){
+				if(document.getElementById("i"+id).innerHTML != giocata){
+					document.getElementById("i"+id).innerHTML = giocata;
+					document.getElementById("div4-"+id).innerHTML = quota;
+				}
+				else{
+					return;
+				}
+			}
+			else{
+				var newli = document.createElement("li");
+				newli.setAttribute("id", "li"+id);
+				document.getElementById("betslipList").appendChild(newli);
+				
+				var newButton = document.createElement("button");
+				newButton.setAttribute("id", "button"+id);
+				newButton.setAttribute("class", "btn betslip__list-close");
+				newButton.setAttribute("type", "button");
+				document.getElementById("li"+id).appendChild(newButton);
+				
+				var newI = document.createElement("i");
+				newI.setAttribute("id", "i"+id);
+				newI.setAttribute("class", "las la-times");
+				newI.innerHTML = giocata;
+				document.getElementById("button"+id).appendChild(newI);
+				
+				var newDiv1 = document.createElement("div");
+				newDiv1.setAttribute("id", "div1-"+id);
+				newDiv1.setAttribute("class", "betslip__list-content");
+				document.getElementById("li"+id).appendChild(newDiv1);
+				
+				var newDiv2 = document.createElement("div");
+				newDiv2.setAttribute("id", "div2-"+id);
+				newDiv2.setAttribute("class", "betslip__list-bet");
+				document.getElementById("div1-"+id).appendChild(newDiv2);
+				
+				var newSpan = document.createElement("span");
+				newSpan.setAttribute("id", "span"+id);
+				newSpan.setAttribute("class", "betslip__list-team");
+				newSpan.innerHTML = casa + ' - ' + ospite;
+				document.getElementById("div2-"+id).appendChild(newSpan);
+				
+				var newDiv3 = document.createElement("div");
+				newDiv3.setAttribute("id", "div3-"+id);
+				newDiv3.setAttribute("class", "betslip__list-match");
+				newDiv3.innerHTML = data;
+				document.getElementById("div1-"+id).appendChild(newDiv3);
+				
+				var newDiv4 = document.createElement("div");
+				newDiv4.setAttribute("id", "div4-"+id);
+				newDiv4.setAttribute("class", "betslip__list-ratio");
+				newDiv4.innerHTML = quota;
+				document.getElementById("li"+id).appendChild(newDiv4);
+			}
 			
-			document.getElementById('risultatoGiocato').innerHTML = giocata;
-			document.getElementById('evento').innerHTML = casa + ' - ' + ospite;
-			document.getElementById('data').innerHTML = data;
-			document.getElementById('quotaEvento').innerHTML = quota;
+			
 		}
 	</script>
 	
