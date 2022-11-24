@@ -5672,4 +5672,23 @@ textarea.form--control:focus {
     z-index: -1;
     background: hsl(var(--base));
 }
+
+/*---------------------------------------
+    4.4 Home Section
+-----------------------------------------*/
+.home-page {
+    background-image: url(../images/playground.png);
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+}
+
+html, body
+{
+    height: 100%;
+    width: 100%;
+}
+
 /*# sourceMappingURL=main.css.map */
