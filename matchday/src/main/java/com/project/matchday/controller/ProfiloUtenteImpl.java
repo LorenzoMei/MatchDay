@@ -1,19 +1,17 @@
 package com.project.matchday.controller;
 
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
-
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
+import org.springframework.web.servlet.ModelAndView;
 import com.project.matchday.model.Schedina;
 import com.project.matchday.model.Utente;
 import com.project.matchday.interfaces.ProfiloRepository;
 import com.project.matchday.interfaces.ProfiloUtenteService;
 import com.project.matchday.interfaces.UserRepository;
+
 
 @Controller
 @SessionAttributes("utente")
@@ -25,6 +23,11 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	private ProfiloRepository profiloRep;
 	@Autowired
 	private UserRepository userRep;
+        @RequestMapping(value = "profiloUtente")
+	public void getProfiloUtente() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("profiloUtente");
+	}
 	
 	@Override
 	public List<Schedina> visualizzaSchedine(String email){
