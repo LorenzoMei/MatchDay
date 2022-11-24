@@ -5691,4 +5691,13 @@ html, body
     width: 100%;
 }
 
+.container-quote
+{	
+	border-radius:12px;
+	background-color:rgb(230, 230, 230);
+	text-align: center;
+	height: 100%;
+    width: 100%;
+}
+
 /*# sourceMappingURL=main.css.map */
