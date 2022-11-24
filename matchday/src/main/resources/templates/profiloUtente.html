@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <link rel="stylesheet" href="../../../resources/static/css/home.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,28 +57,33 @@
   	   	</nav> 
   
 
-<div id="myDIV">  	   
+
+<div id="myDIV" method="post" action="visualizzaInformazioni">  	   
 <table class="table">
-	<thead class="thead-dark">
+	<thead class="thead-dark" >
     <tr>
       <th scope="col">Nome</th>
-      <td>Angelo</td>
+      <td th:text=${utente.nome}></td>
     </tr>
     <tr>
       <th scope="col">Cognome</th>
-      <td>Romano</td>
+      <td th:text=${utente.nome}></td>
     </tr>
     <tr>
       <th scope="col">Email</th>
-      <td>Aromano@gmail.com</td>
+      <td th:text=${utente.email}></td>
     </tr>
     <tr>
       <th scope="col">Saldo</th>
-      <td>10000000000000.00</td>
+      <td th:text=${utente.saldo}></td>
 	</tr>
 	</thead>
 </table>
 </div>
+
+
+
+
 	 
 <script>function myFunction() {
 	  var x = document.getElementById("myDIV");
