@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="../../../resources/static/css/main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+ <!-- bootstrap 5  -->
+    <link rel="stylesheet" href="../css/lib/bootstrap.min.css" />
+    <!-- Simplebar  -->
+    <link rel="stylesheet" href="../css/lib/simplebar.min.css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="../css/main.css" />
+
+<title>Home</title>
+</head>
+<body>
+	<header class="header-primary">
+	  <div class="container">
+	    <div class="row g-0 align-items-center">
+	      <div class="col-5 col-lg-2">
+	        <!-- Logo  -->
+	        <a href="home" class="logo">
+	          MatchDay
+	        </a>
+	        <!-- Logo End -->
+	      </div>
+	      <div class="col-7 col-lg-10">
+	        <nav class="primary-menu-container">
+	        	<a class="nav-link sport" href="home?tipo=calcio">Calcio</a>
+	        	<a class="nav-link sport" href="home?tipo=pallavolo">Pallavolo</a>
+	        	<a class="nav-link sport" href="home?tipo=basket">Basket</a>
+	        	<a class="navbar-brand" href="profiloUtente">
+			      <img src="/images/user_icon.png" alt="Logo" style="width:40px;" class="rounded-pill">
+			    </a>
+	        </nav>
+	      </div>
+	    </div>
+	  </div>
+	</header>
+
+	
+<div class="home-page section">
+	<div class="container">
+		<div class="row">
+	    	<div class="col-3">
+	    	</div>
+	    	<div class="col-6">
+	    		<div class="container"  th:each="evento,iter : ${listaEventi}">
+	    			<br>
+	    			
+		    		<div class="card">
+					  <div class="card-body card-shadow">
+					  	<div class="row">
+					  		<div class="col-6">
+					  			<h4 style="margin:1rem 0 1rem">
+							   		[[${evento.squadraCasa}]] - [[${evento.squadraOspite}]]
+								</h4>
+					  		</div>
+						  	
+							<div class="col-6" style="text-align: right;">
+								<p style="margin:1rem 0 1rem"> [[${evento.data}]]</p>									
+							</div>
+						</div>
+						
+						
+						<div class="row">
+							<div class="col-4">
+								<h6 style="text-align:center">1</h6>
+								<div class="container" style="text-align:center">
+									<button class="container-quote" th:id="'quotaCasa' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaCasa}]], '1', [[${iter.count}]])">
+									[[${evento.quota.quotaCasa}]]
+									</button>
+								</div>
+							</div>
+							
+							<div class="col-4" th:if="${evento.quota.quotaPareggio != -1}">
+								<h6 style="text-align:center">X</h6>
+								<div class="container" style="text-align:center">
+									<button class="container-quote" th:id="'quotaPareggio' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaPareggio}]], 'X', [[${iter.count}]])">
+										[[${evento.quota.quotaPareggio}]]
+									</button>
+								</div>
+							</div>
+							
+							<div class="col-4">
+								<h6 style="text-align:center">2</h6>
+								<div class="container" style="text-align:center">
+									<button class="container-quote" th:id="'quotaOspite' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaOspite}]], '2', [[${iter.count}]])">
+										[[${evento.quota.quotaOspite}]]
+									</button>
+								</div>
+							</div>
+							
+						</div>
+						
+					  </div>
+					</div>
+				</div>
+	    	</div>
+	    	<div class="col-3">
+	    	</div>
+	 	</div>
+		
+	</div>
+	<!-- La mia schedina  -->
+    <div class="betslip">
+    	<br>
+        <div class="betslip__head">
+            <div class="betslip__head-content"></div>
+            <div class="betslip__head-switch">
+                <div class="form-check form-switch">
+                </div>
+            </div>
+        </div>
+        <div class="betslip__body" data-simplebar>
+            <ul class="list betslip__list" id="betslipList">
+                <!--  <li>
+                    <button type="button" class="btn betslip__list-close">
+                        <i class="las la-times" id="risultatoGiocato"></i>
+                    </button>
+                    <div class="betslip__list-content">
+                        <div class="betslip__list-bet">
+                            <span class="betslip__list-team" id="evento"></span>
+                        </div>
+                        <div class="betslip__list-match" id="data"></div>
+                    </div>
+                    <div class="betslip__list-ratio" id="quotaEvento"></div>
+                </li>-->
+            </ul>
+        </div>
+        <div class="betslip__footer">
+            <ul class="list betslip__footer-list">
+                <li>
+                    <span class="betslip__footer-text">Importo</span>
+                    <span class="betslip__footer-text">       </span>
+                </li>
+            </ul>
+            <div class="betslip__footer-bottom">
+                <input type="number" class="form-control form--control betslip-form" placeholder="Enter Amount">
+                <button type="button" class="btn btn--base btn--md sm-text betslip__footer-btn">
+                    PLACE BET
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- La mia Schedina END -->
+</div>
+
+	<script>
+		function aggiungiEventoAllaSchedina(casa, ospite, tipo, data, quota, giocata, id){
+			if(document.getElementById("li"+id) != null){
+				if(document.getElementById("i"+id).innerHTML != giocata){
+					document.getElementById("i"+id).innerHTML = giocata;
+					document.getElementById("div4-"+id).innerHTML = quota;
+				}
+				else{
+					return;
+				}
+			}
+			else{
+				var newli = document.createElement("li");
+				newli.setAttribute("id", "li"+id);
+				document.getElementById("betslipList").appendChild(newli);
+				
+				var newButton = document.createElement("button");
+				newButton.setAttribute("id", "button"+id);
+				newButton.setAttribute("class", "btn betslip__list-close");
+				newButton.setAttribute("type", "button");
+				document.getElementById("li"+id).appendChild(newButton);
+				
+				var newI = document.createElement("i");
+				newI.setAttribute("id", "i"+id);
+				newI.setAttribute("class", "las la-times");
+				newI.innerHTML = giocata;
+				document.getElementById("button"+id).appendChild(newI);
+				
+				var newDiv1 = document.createElement("div");
+				newDiv1.setAttribute("id", "div1-"+id);
+				newDiv1.setAttribute("class", "betslip__list-content");
+				document.getElementById("li"+id).appendChild(newDiv1);
+				
+				var newDiv2 = document.createElement("div");
+				newDiv2.setAttribute("id", "div2-"+id);
+				newDiv2.setAttribute("class", "betslip__list-bet");
+				document.getElementById("div1-"+id).appendChild(newDiv2);
+				
+				var newSpan = document.createElement("span");
+				newSpan.setAttribute("id", "span"+id);
+				newSpan.setAttribute("class", "betslip__list-team");
+				newSpan.innerHTML = casa + ' - ' + ospite;
+				document.getElementById("div2-"+id).appendChild(newSpan);
+				
+				var newDiv3 = document.createElement("div");
+				newDiv3.setAttribute("id", "div3-"+id);
+				newDiv3.setAttribute("class", "betslip__list-match");
+				newDiv3.innerHTML = data;
+				document.getElementById("div1-"+id).appendChild(newDiv3);
+				
+				var newDiv4 = document.createElement("div");
+				newDiv4.setAttribute("id", "div4-"+id);
+				newDiv4.setAttribute("class", "betslip__list-ratio");
+				newDiv4.innerHTML = quota;
+				document.getElementById("li"+id).appendChild(newDiv4);
+			}
+			
+			
+		}
+	</script>
+	
+	<!-- jQuery library -->
+<script src="../js/jquery-3.6.0.min.js"></script>
+<!-- bootstrap 5 js -->
+<script src="../js/bootstrap.bundle.min.js"></script>
+<!-- Simplebar  -->
+<script src="../js/simplebar.min.js"></script>
+
+<!-- main js -->
+<script src="../js/app.js"></script>
+</body>
+</html>
