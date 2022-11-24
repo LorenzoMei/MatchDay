@@ -28,9 +28,12 @@
 	      </div>
 	      <div class="col-7 col-lg-10">
 	        <nav class="primary-menu-container">
-	        	<a class="nav-link" href="home?tipo=calcio">Calcio</a>
-	        	<a class="nav-link" href="home?tipo=pallavolo">Pallavolo</a>
-	        	<a class="nav-link" href="home?tipo=basket">Basket</a>
+	        	<a class="nav-link sport" href="home?tipo=calcio">Calcio</a>
+	        	<a class="nav-link sport" href="home?tipo=pallavolo">Pallavolo</a>
+	        	<a class="nav-link sport" href="home?tipo=basket">Basket</a>
+	        	<a class="navbar-brand" href="profiloUtente">
+			      <img src="/images/user_icon.png" alt="Logo" style="width:40px;" class="rounded-pill">
+			    </a>
 	        </nav>
 	      </div>
 	    </div>
@@ -72,7 +75,7 @@
 								</div>
 							</div>
 							
-							<div class="col-4">
+							<div class="col-4" th:if="${evento.quota.quotaPareggio != -1}">
 								<h6 style="text-align:center">X</h6>
 								<div class="container" style="text-align:center" onclick="aggiungiEventoAllaSchedina()">
 									<button class="container-quote">
