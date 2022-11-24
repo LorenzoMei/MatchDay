@@ -45,7 +45,7 @@
 	    	<div class="col-3">
 	    	</div>
 	    	<div class="col-6">
-	    		<div class="container"  th:each="evento : ${listaEventi}">
+	    		<div class="container"  th:each="evento,iter : ${listaEventi}">
 	    			<br>
 	    			
 		    		<div class="card">
@@ -67,7 +67,7 @@
 							<div class="col-4">
 								<h6 style="text-align:center">1</h6>
 								<div class="container" style="text-align:center">
-									<button class="container-quote" onclick="aggiungiEventoAllaSchedina()">
+									<button class="container-quote" th:id="'quotaCasa' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaCasa}]], '1')">
 									[[${evento.quota.quotaCasa}]]
 									</button>
 								</div>
@@ -75,8 +75,8 @@
 							
 							<div class="col-4" th:if="${evento.quota.quotaPareggio != -1}">
 								<h6 style="text-align:center">X</h6>
-								<div class="container" style="text-align:center" onclick="aggiungiEventoAllaSchedina()">
-									<button class="container-quote">
+								<div class="container" style="text-align:center">
+									<button class="container-quote" th:id="'quotaPareggio' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaPareggio}]], 'X')">
 										[[${evento.quota.quotaPareggio}]]
 									</button>
 								</div>
@@ -84,8 +84,8 @@
 							
 							<div class="col-4">
 								<h6 style="text-align:center">2</h6>
-								<div class="container" style="text-align:center" onclick="aggiungiEventoAllaSchedina()">
-									<button class="container-quote">
+								<div class="container" style="text-align:center">
+									<button class="container-quote" th:id="'quotaOspite' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaOspite}]], '2');">
 										[[${evento.quota.quotaOspite}]]
 									</button>
 								</div>
@@ -115,173 +115,15 @@
             <ul class="list betslip__list">
                 <li>
                     <button type="button" class="btn betslip__list-close">
-                        <i class="las la-times"></i>
+                        <i class="las la-times" id="risultatoGiocato"></i>
                     </button>
                     <div class="betslip__list-content">
                         <div class="betslip__list-bet">
-                            <span class="betslip__list-odd">Winner</span>
-                            <span class="betslip__list-team"> - </span>
-                            <span class="betslip__list-team">CHELSEA F.C</span>
+                            <span class="betslip__list-team" id="evento"></span>
                         </div>
-                        <div class="betslip__list-match">Chelsea F.C - Man. City</div>
-                        <div class="betslip__list-return">
-                            Bet <span>$5</span> - Payout <span>$7.5</span>
-                        </div>
+                        <div class="betslip__list-match" id="data"></div>
                     </div>
-                    <div class="betslip__list-ratio">1.5</div>
-                </li>
-                <li>
-                    <button type="button" class="btn betslip__list-close">
-                        <i class="las la-times"></i>
-                    </button>
-                    <div class="betslip__list-content">
-                        <div class="betslip__list-bet">
-                            <span class="betslip__list-odd">Toss Winner</span>
-                            <span class="betslip__list-team"> - </span>
-                            <span class="betslip__list-team">CHELSEA F.C</span>
-                        </div>
-                        <div class="betslip__list-match">Chelsea F.C - Man. City</div>
-                        <div class="betslip__list-return">
-                            Bet <span>$5</span> - Payout <span>$7.5</span>
-                        </div>
-                    </div>
-                    <div class="betslip__list-ratio">1.5</div>
-                </li>
-                <li>
-                    <button type="button" class="btn betslip__list-close">
-                        <i class="las la-times"></i>
-                    </button>
-                    <div class="betslip__list-content">
-                        <div class="betslip__list-bet">
-                            <span class="betslip__list-odd">Winner</span>
-                            <span class="betslip__list-team"> - </span>
-                            <span class="betslip__list-team">CHELSEA F.C</span>
-                        </div>
-                        <div class="betslip__list-match">Chelsea F.C - Man. City</div>
-                        <div class="betslip__list-return">
-                            Bet <span>$5</span> - Payout <span>$7.5</span>
-                        </div>
-                    </div>
-                    <div class="betslip__list-ratio">1.5</div>
-                </li>
-                <li>
-                    <button type="button" class="btn betslip__list-close">
-                        <i class="las la-times"></i>
-                    </button>
-                    <div class="betslip__list-content">
-                        <div class="betslip__list-bet">
-                            <span class="betslip__list-odd">Winner</span>
-                            <span class="betslip__list-team"> - </span>
-                            <span class="betslip__list-team">CHELSEA F.C</span>
-                        </div>
-                        <div class="betslip__list-match">Chelsea F.C - Man. City</div>
-                        <div class="betslip__list-return">
-                            Bet <span>$5</span> - Payout <span>$7.5</span>
-                        </div>
-                    </div>
-                    <div class="betslip__list-ratio">1.5</div>
-                </li>
-                <li>
-                    <button type="button" class="btn betslip__list-close">
-                        <i class="las la-times"></i>
-                    </button>
-                    <div class="betslip__list-content">
-                        <div class="betslip__list-bet">
-                            <span class="betslip__list-odd">Winner</span>
-                            <span class="betslip__list-team"> - </span>
-                            <span class="betslip__list-team">CHELSEA F.C</span>
-                        </div>
-                        <div class="betslip__list-match">Chelsea F.C - Man. City</div>
-                        <div class="betslip__list-return">
-                            Bet <span>$5</span> - Payout <span>$7.5</span>
-                        </div>
-                    </div>
-                    <div class="betslip__list-ratio">1.5</div>
-                </li>
-                <li>
-                    <button type="button" class="btn betslip__list-close">
-                        <i class="las la-times"></i>
-                    </button>
-                    <div class="betslip__list-content">
-                        <div class="betslip__list-bet">
-                            <span class="betslip__list-odd">Winner</span>
-                            <span class="betslip__list-team"> - </span>
-                            <span class="betslip__list-team">CHELSEA F.C</span>
-                        </div>
-                        <div class="betslip__list-match">Chelsea F.C - Man. City</div>
-                        <div class="betslip__list-return">
-                            Bet <span>$5</span> - Payout <span>$7.5</span>
-                        </div>
-                    </div>
-                    <div class="betslip__list-ratio">1.5</div>
-                </li>
-                <li>
-                    <button type="button" class="btn betslip__list-close">
-                        <i class="las la-times"></i>
-                    </button>
-                    <div class="betslip__list-content">
-                        <div class="betslip__list-bet">
-                            <span class="betslip__list-odd">Winner</span>
-                            <span class="betslip__list-team"> - </span>
-                            <span class="betslip__list-team">CHELSEA F.C</span>
-                        </div>
-                        <div class="betslip__list-match">Chelsea F.C - Man. City</div>
-                        <div class="betslip__list-return">
-                            Bet <span>$5</span> - Payout <span>$7.5</span>
-                        </div>
-                    </div>
-                    <div class="betslip__list-ratio">1.5</div>
-                </li>
-                <li>
-                    <button type="button" class="btn betslip__list-close">
-                        <i class="las la-times"></i>
-                    </button>
-                    <div class="betslip__list-content">
-                        <div class="betslip__list-bet">
-                            <span class="betslip__list-odd">Winner</span>
-                            <span class="betslip__list-team"> - </span>
-                            <span class="betslip__list-team">CHELSEA F.C</span>
-                        </div>
-                        <div class="betslip__list-match">Chelsea F.C - Man. City</div>
-                        <div class="betslip__list-return">
-                            Bet <span>$5</span> - Payout <span>$7.5</span>
-                        </div>
-                    </div>
-                    <div class="betslip__list-ratio">1.5</div>
-                </li>
-                <li>
-                    <button type="button" class="btn betslip__list-close">
-                        <i class="las la-times"></i>
-                    </button>
-                    <div class="betslip__list-content">
-                        <div class="betslip__list-bet">
-                            <span class="betslip__list-odd">Winner</span>
-                            <span class="betslip__list-team"> - </span>
-                            <span class="betslip__list-team">CHELSEA F.C</span>
-                        </div>
-                        <div class="betslip__list-match">Chelsea F.C - Man. City</div>
-                        <div class="betslip__list-return">
-                            Bet <span>$5</span> - Payout <span>$7.5</span>
-                        </div>
-                    </div>
-                    <div class="betslip__list-ratio">1.5</div>
-                </li>
-                <li>
-                    <button type="button" class="btn betslip__list-close">
-                        <i class="las la-times"></i>
-                    </button>
-                    <div class="betslip__list-content">
-                        <div class="betslip__list-bet">
-                            <span class="betslip__list-odd">Winner</span>
-                            <span class="betslip__list-team"> - </span>
-                            <span class="betslip__list-team">CHELSEA F.C</span>
-                        </div>
-                        <div class="betslip__list-match">Chelsea F.C - Man. City</div>
-                        <div class="betslip__list-return">
-                            Bet <span>$5</span> - Payout <span>$7.5</span>
-                        </div>
-                    </div>
-                    <div class="betslip__list-ratio">1.5</div>
+                    <div class="betslip__list-ratio" id="quotaEvento"></div>
                 </li>
             </ul>
         </div>
@@ -316,8 +158,15 @@
 </div>
 
 	<script>
-		function aggiungiEventoAllaSchedina(){
+		function aggiungiEventoAllaSchedina(casa, ospite, tipo, data, quota, giocata){
+			var newElement = document.createElement("p");
+			newElement.innerHTML = "CONTENTS";
+			document.getElementById("ID").appendChild(newElement);
 			
+			document.getElementById('risultatoGiocato').innerHTML = giocata;
+			document.getElementById('evento').innerHTML = casa + ' - ' + ospite;
+			document.getElementById('data').innerHTML = data;
+			document.getElementById('quotaEvento').innerHTML = quota;
 		}
 	</script>
 	
