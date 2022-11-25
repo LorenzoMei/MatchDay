@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="../../../resources/static/css/main.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="../css/lib/bootstrap.min.css" />
+<!-- Simplebar  -->
+<link rel="stylesheet" href="../css/lib/simplebar.min.css" />
+<!-- main css -->
+<link rel="stylesheet" href="../css/main.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<title>Area Personale Utente</title>
+</head>
+<body>
+<header class="header-primary" style="height: 400;" >
+ <div class="container">
+	    <div class="row g-0 align-items-center">
+	      <div class="col-5 col-lg-2">
+	        <!-- Logo  -->
+	        <a href="home" class="logo">
+	          MatchDay
+	        </a>
+	        <!-- Logo End -->
+	      </div>
+	 
+	      
+	   <div class="col-7 col-lg-10">    
+	    
+	     <nav class="primary-menu-container">
+	        	<a class="nav-link sport" onclick="myFunction()" href="#">Area Personale</a>
+	     
+          <a class="nav-link dropdown-toggle sport" data-bs-toggle="dropdown" href="#" role="button">Deposita</a>
+          
+          
+          <form class="navbar-form navbar-left" action="/deposita" method="post">
+          <ul class="dropdown-menu">
+          <li> <a class="dropdown-item" href="#"><input type="number" name="numDep" min="0" placeholder= "Inserire cifra Deposito"></a></li>
+          <li><a class="dropdown-item" href="profiloUtente"><input type="submit" value="Submit"></a></li>         
+      	  </ul>
+	      </form>
+	      
+	      <a class="nav-link dropdown-toggle sport" data-bs-toggle="dropdown" href="#" role="button">Preleva</a>
+          <form class="navbar-form navbar-left" action="/preleva" method="post">
+          <ul class="dropdown-menu">
+          
+          <li><a class="dropdown-item" href="#"><input type="number" name="numPre" min="0" placeholder = "Inserire cifra Prelievo"></a></li>
+          <li><a class="dropdown-item" href="profiloUtente"><input type="submit" value="Submit"> </a>
+          </li>
+         	<li> <a class="dropdown-item" th:text=${risultato}></a></li>
+      	  </ul>
+      	  </form> 
+	              
+          <a class="nav-link sport"  href="#">Storico Schedine</a>
+          
+
+			    
+			  </nav>  
+			      </div> 
+			    </div>   
+	      </div>
+	</header>
+
+
+
+  
+
+
+<div id="myDIV">  	   
+<table class="table">
+	<thead class="thead-dark" >
+    <tr>
+      <th scope="col">Nome</th>
+      <td th:text=${utente.nome}></td>
+    </tr>
+    <tr>
+      <th scope="col">Cognome</th>
+      <td th:text=${utente.cognome}></td>
+    </tr>
+    <tr>
+      <th scope="col">Email</th>
+      <td th:text=${utente.email}></td>
+    </tr>
+    <tr>
+      <th scope="col">Saldo</th>
+      <td th:text=${utente.saldo}></td>
+	</tr>
+	</thead>
+</table>
+</div>
+
+
+
+
+	 
+<script>function myFunction() {
+	  var x = document.getElementById("myDIV");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } else {
+	    x.style.display = "none";
+	  }
+	}</script>
+</body>
+</html>
