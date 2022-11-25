@@ -12,77 +12,159 @@
   <link rel="stylesheet" href="../css/main.css" />
 </head>
 
+
 <body>
+<!-- Header -->
+<header class="header-primary">
+  <div class="container">
+    <div class="row g-0 align-items-center">
+      <div class="col-5 col-lg-2">
+        <!-- Logo  -->
+        <a href="home" class="logo">
+          MatchDay
+        </a>
+        <!-- Logo End -->
+      </div>
+      <div class="col-7 col-lg-10">
+        <nav class="primary-menu-container">
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Header End -->
 
-	<div class="col-12">
-	  <h4 class="login-form__title">AGGIUNGI EVENTO</h4>
-	</div>
-	          
-	<form action="addEvent" method="post" th:action="@{addEvent}" th:object="${registerEventFull}">
-	
-	<!-- DATA OK -->
-	<div class="col-12">	  
-	  <label for="data" class="form-label">Data:</label>
-	  <input type=datetime-local th:field="*{data}" class="form-control form--control mb-3" id="data" name="data" required/>
-	  <script>document.getElementById('data').value = new Date().toISOString().substring(0, 10);</script>
-	</div>
-	
-	<!-- TIPO OK -->
-	<div class="col-12">
-	  <label for="tipologia" class="form-label">Tipologia:</label>
-	  <select id="tipo" th:field="*{tipo}" name="tipo" required>
-			  <option value="calcio">Calcio</option>
-			  <option value="pallavolo">Pallavolo</option>
-			  <option value="basket">Basket</option>
-	  </select>
-	</div>
-	
-	<!-- CASA OK -->
-	<div class="col-12">
-	  <label for="squadraCasa" class="form-label">Squadra Casa:</label>
-	  <input type="text" th:field="*{squadraCasa}" class="form-control form--control mb-3" id="squadraCasa" required/>
-	</div>
 
-	<!-- OSPITE OK -->
-	<div class="col-12">
-	  <label for="squadraOspite" class="form-label">Squadra Ospite:</label>
-	  <input type="text" th:field="*{squadraOspite}" class="form-control form--control mb-3" id="squadraOspite" required/>
-	</div>
-	
-	<!-- QUOTE -->
-	<div class="col-12">
-	  <label for="quotaCasa" class="form-label">1</label>
-	  <input id="quotaCasa" th:field="*{quotaCasa}" type="text" class="form-control form--control mb-3" required/>
-	</div>
-	<div class="col-12" id="pareggio">
-	  <label for="quotaPareggio" class="form-label">X</label>
-	  <input id="quotaPareggio" th:field="*{quotaPareggio}" type="text" class="form-control form--control mb-3" required/>
-	</div>
-	
-	<script>
-	  //   SCRIPT PER GESTIRE IL PAREGGIO
-	  let checkPareggio = document.querySelector(".tipo");
-	  
-	  tipo.addEventListener( "change", (event) => {
-	     if ( event.target.value.equals(calcio) ) {
-	    	 document.getElementById("pareggio").style.display = "block";
-	     } else {
-	    	 document.getElementById("pareggio").style.display = "none";
-	     }
-	  });
-	</script>
-	
-	
-	<div class="col-12">
-	  <label for="quotaOspite" class="form-label">2</label>
-	  <input id="quotaOspite" th:field="*{quotaOspite}" type="text" class="form-control form--control mb-3" required/>
-	</div>
-	
-			            		
-			 <br><br>           		
-	<input type="submit" value="PER FAVORE">
-	
-	</form>
+<!-- Registration page  -->
+<div class="login-page section">
+  <div class="container">
+    <div class="row g-3 align-items-lg-center justify-content-lg-between">
+      <div class="col-lg-3 col-xl-3 order-1 order-lg-2">
+      </div>
+      <div class="col-lg-6 col-xl-5 order-1 order-lg-2">
+      
+        <div class="login-form">
+ 
+		 	<div class="col-12">
+			  <h4 class="login-form__title">AGGIUNGI EVENTO</h4>
+			</div>
+			          
+			<form action="addEvent" method="post" th:action="@{addEvent}" th:object="${registerEventFull}" onsubmit="validateMyForm(event);">
+			
+			<!-- DATA OK -->
+			<div class="col-12">	  
+			  <label for="data" class="form-label">Data:</label>
+			  <input type=datetime-local th:field="*{data}" class="form-control form--control mb-3" id="data" name="data" required/>
+			</div>
+			
+			<!-- TIPO OK -->
+			<div class="col-12">
+			  <label for="tipologia" class="form-label" onchange="myFunction()">Tipologia:</label>
+			  <select id="tipo" th:field="*{tipo}" name="tipo" required>
+					  <option value="calcio">Calcio</option>
+					  <option value="pallavolo">Pallavolo</option>
+					  <option value="basket">Basket</option>
+			  </select>
+			</div>
+			
+			<!-- CASA OK -->
+			<div class="col-12">
+			  <label for="squadraCasa" class="form-label">Squadra Casa:</label>
+			  <input type="text" th:field="*{squadraCasa}" class="form-control form--control mb-3" id="squadraCasa" required/>
+			</div>
+		
+			<!-- OSPITE OK -->
+			<div class="col-12">
+			  <label for="squadraOspite" class="form-label">Squadra Ospite:</label>
+			  <input type="text" th:field="*{squadraOspite}" class="form-control form--control mb-3" id="squadraOspite" required/>
+			</div>
+			
+			<!-- QUOTE IF CALCIO-->
+			<div class="row" id="quoteIfCalcio">
+				<div class="col-2"></div>
+				<div class="col-1" id="sleepy" style="display:none"></div>
+				<div class="col-2">
+				  <label for="quotaCasa" class="form-label" style="text-align:center;width:100%">1</label>
+				  <input id="quotaCasa" name="quotaCasa" value="0.0" type="text" class="form-control form--control mb-3" style="text-align:center" required/>
+				</div>
+				<div class="col-1"></div>
+				<div class="col-2" id="pareggio">
+				  <label for="quotaPareggio" class="form-label" style="text-align:center;width:100%">X</label>
+				  <input id="quotaPareggio" name="quotaPareggio" value="0.0" type="text" class="form-control form--control mb-3" style="text-align:center" required/>
+				</div>
+				<div class="col-1"></div>
+				<div class="col-2">
+				  <label for="quotaOspite" class="form-label" style="text-align:center;width:100%">2</label>
+				  <input id="quotaOspite" name="quotaOspite" value="0.0" type="text" class="form-control form--control mb-3" style="text-align:center" required/>
+				</div>
+				<div class="col-1" id="sleepy" style="display:none"></div>
+				<div class="col-2"></div>
+			</div>
+			
+			<script>
+			  //   SCRIPT PER GESTIRE IL PAREGGIO
+			  
+			  let checkTipo = document.getElementById("tipo");
+			  var pareggio = document.getElementById("pareggio");
+			  var quotaPareggio = document.getElementById("quotaPareggio");
+			  var sleepy = document.getElementById("sleepy");
+			  
+			  checkTipo.addEventListener( "change", () => {
+			     if ( checkTipo.value == "calcio" ) {
+			    	 quotaPareggio.value = "0.0";
+			    	 pareggio.style.display = "block";
+			    	 sleepy.style.display = "none";
+
+			     } else {
+			    	 quotaPareggio.value = "-1";
+			    	 pareggio.style.display = "none";
+			    	 sleepy.style.display = "block";
+			    	 }
+			  });
+		
+			</script>           		
+			<br>        		
+			<input type="submit" value="AGGIUNGI" class="btn btn--xl btn--base w-100 btn--xl" style="margin:auto">
+			
+			<script>
+			function validateMyForm(e) {
+				  var quotaCasa = document.getElementById("quotaCasa");
+				  var quotaPareggio = document.getElementById("quotaPareggio");
+				  var quotaOspite = document.getElementById("quotaOspite");
+
+				  if (quotaCasa.value == 0) {
+				    alert("La quota della squadra di casa è 0!!!");
+		            e.preventDefault() ;
+		            returnToPreviousPage();
+				  } 
+
+				  if (quotaPareggio.value == 0) {
+					    alert("La quota del pareggio è 0!!!");
+			            e.preventDefault() ;
+			            returnToPreviousPage();
+					  } 
+
+				  if (quotaOspite.value == 0) {
+					    alert("La quota della squadra ospite è 0!!!");
+			            e.preventDefault() ;
+			            returnToPreviousPage();
+					  } 
+
+				  return true;
+				  
+				}
+			</script>
+			</form>
+          
+        </div>
+      </div>
+            <div class="col-lg-3 col-xl-3 order-1 order-lg-2">
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </body>
 </html>
+
