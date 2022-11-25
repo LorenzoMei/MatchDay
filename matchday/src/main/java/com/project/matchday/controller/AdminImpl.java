@@ -109,14 +109,25 @@ public class AdminImpl implements AdminService{
     	ModelAndView mav = new ModelAndView();
     	
     	if (bindingResult.hasErrors()) {
+    		System.out.println("IF -----------");
+    		System.out.println("quota1:  "+appoggioEvento.getQuotaCasa());
+    		System.out.println("quotaX:  "+appoggioEvento.getQuotaPareggio());
+    		System.out.println("quota2:  "+appoggioEvento.getQuotaOspite());
+    		System.out.println("casa:  "+appoggioEvento.getSquadraCasa());
+    		System.out.println("ospite:  "+appoggioEvento.getSquadraOspite());
+    		System.out.println("data:  "+appoggioEvento.getData());
+    		System.out.println("tipo:  "+appoggioEvento.getTipo());
             return mav;
     	}
     	else { 
             try {
+        		System.out.println("TRY -----------");
         		aggiungiEvento(appoggioEvento);
             	return new ModelAndView("home");
             	}
             catch (Exception exception) {
+        		System.out.println("CATCH -----------");
+
                 bindingResult.rejectValue("squadraCasa", "error.registerEventFull", exception.getMessage());
                 return mav;
             }
@@ -125,3 +136,4 @@ public class AdminImpl implements AdminService{
     }
 
 }
+
