@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.project.matchday.interfaces.EventiRepository;
 import com.project.matchday.interfaces.HomeService;
 import com.project.matchday.interfaces.ProfiloUtenteService;
@@ -42,21 +43,25 @@ public class HomeImpl implements HomeService{
 	}
 
 	@Override
-	@PostMapping(value = "gioca", consumes="application/json")
+	@PostMapping(value = "gioca", consumes={"application/json","application/json"})
+	
 	public ModelAndView giocaSchedina(
-			@RequestParam(name="schedina",  required = false) Map<Evento, String> schedina,
+			@RequestParam(name="schedina",  required = false) String schedina,
 			@RequestParam(name="importo") double importo) {
 		ModelAndView mav = new ModelAndView();
 		
 		System.out.println("SONO QUI");
 		
-		Set<Evento> keys = schedina.keySet();
-        for ( Evento key : keys ) {
-            System.out.println("CASA " + key.getSquadraCasa() );
-            System.out.println("OSPITE " + key.getSquadraOspite() );
-            System.out.println("QUOTA " + key.getQuota() );
-            System.out.println("GIOCATA " + schedina.get(key) );
-        }
+		ArrayList<Evento> eventiInSchedina = new ArrayList<Evento>();
+		
+        	
+    	/*Gson gson = new Gson();
+		Evento evento = gson.fromJson(key, Evento.class);
+		
+        System.out.println("CASA " + evento.getSquadraCasa() );
+        System.out.println("OSPITE " + evento.getSquadraOspite() );
+        System.out.println("QUOTA " + evento.getQuota() );
+        System.out.println("GIOCATA " + schedina.get(key) );*/
         
 		return mav;
 	}
