@@ -8,6 +8,7 @@ public class AppoggioEvento {
 	private String squadraCasa;
 	private String squadraOspite;
 	private String tipo;
+	@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
 	private Date data;
 	private float quotaCasa;
 	private float quotaPareggio;
