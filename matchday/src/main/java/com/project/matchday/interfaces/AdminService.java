@@ -17,7 +17,7 @@ public interface AdminService{
 	
 	public void sbanna(String email);
 	
-	public void aggiungiEvento(Evento evento, Quota quota);
+	public void aggiungiEvento(AppoggioEvento appoggioEvento);
 	
 	public void generaRisultati();
 }
