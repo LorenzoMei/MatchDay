@@ -5693,11 +5693,12 @@ html, body
 
 .container-quote
 {	
-	border-radius:12px;
+	border: 0px;
+	border-radius: 12px;
 	background-color:rgb(230, 230, 230);
 	text-align: center;
 	height: 100%;
-    width: 100%;
+    	width: 100%;
 }
 
 a.sport
