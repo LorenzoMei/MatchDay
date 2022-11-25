@@ -43,12 +43,7 @@ public class Evento {
 	}
 	public Evento(String squadraCasa, String squadraOspite, String tipo, Date data, Quota quota) {
 		this.squadraCasa = squadraCasa;
-		this.squadraOspite	public Evento(String squadraCasa, String squadraOspite, String tipo, Date data) {
-		this.squadraCasa = squadraCasa;
 		this.squadraOspite = squadraOspite;
-		this.tipo = tipo;
-		this.data = data;
-	} = squadraOspite;
 		this.tipo = tipo;
 		this.data = data;
 		this.quota = quota;
