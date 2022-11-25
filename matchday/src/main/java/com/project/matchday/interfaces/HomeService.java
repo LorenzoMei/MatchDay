@@ -10,5 +10,5 @@ import com.project.matchday.model.Evento;
 public interface HomeService {
 	
 	ModelAndView visualizzaEventiPerTipo(String tipo);
-	ModelAndView giocaSchedina( Map<Evento, String> schedina, double importo);
+	ModelAndView giocaSchedina(String schedina, double importo);
 }
