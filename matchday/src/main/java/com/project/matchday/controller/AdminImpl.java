@@ -1,6 +1,7 @@
 package com.project.matchday.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -53,9 +54,13 @@ public class AdminImpl implements AdminService{
 		userRepository.save(utente);
 	}
 	
-	public void aggiungiEvento(Evento evento, Quota quota) {
+	public void aggiungiEvento(AppoggioEvento appoggioEvento) {
+    	Quota quota = new Quota(appoggioEvento.getQuotaCasa(),appoggioEvento.getQuotaPareggio(),appoggioEvento.getQuotaOspite());
 		quotaRepository.save(quota);
-		eventiRepository.save(evento);
+		ArrayList<Quota> quoteAll = new ArrayList<Quota>(quotaRepository.findAll());
+		Quota quotaUltima= quoteAll.get(quoteAll.size() - 1);
+    	Evento evento = new Evento(appoggioEvento.getSquadraCasa(),appoggioEvento.getSquadraOspite(),appoggioEvento.getTipo(),appoggioEvento.getData(),quotaUltima);
+    	eventiRepository.save(evento);
 	}
 	
 	public void generaRisultati() {
@@ -101,25 +106,17 @@ public class AdminImpl implements AdminService{
 	
 	@PostMapping(value = "addEvent")
     public ModelAndView RegistraEvento(@ModelAttribute("registerEventFull") AppoggioEvento appoggioEvento, BindingResult bindingResult) {
-    	ModelAndView mav = new ModelAndView("addEvent");
+    	ModelAndView mav = new ModelAndView();
     	
     	if (bindingResult.hasErrors()) {
-        	System.out.println("SONO MORTO-----------------------------------------------------");
-
             return mav;
     	}
     	else { 
             try {
-            	Evento evento = new Evento(appoggioEvento.getSquadraCasa(),appoggioEvento.getSquadraOspite(),appoggioEvento.getTipo(),appoggioEvento.getData());
-            	
-            	Quota quota = new Quota(appoggioEvento.getQuotaCasa(),appoggioEvento.getQuotaPareggio(),appoggioEvento.getQuotaOspite());
-            	System.out.println("SONO NEL TRY-----------------------------------------------------");
-            	aggiungiEvento(evento,quota);
-            	return new ModelAndView("addEvent");
+        		aggiungiEvento(appoggioEvento);
+            	return new ModelAndView("home");
             	}
             catch (Exception exception) {
-            	System.out.println("SONO NEL CATCH-----------------------------------------------------");
-
                 bindingResult.rejectValue("squadraCasa", "error.registerEventFull", exception.getMessage());
                 return mav;
             }
