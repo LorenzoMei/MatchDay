@@ -23,7 +23,7 @@
 	<!-- DATA OK -->
 	<div class="col-12">	  
 	  <label for="data" class="form-label">Data:</label>
-	  <input type=date th:field="*{data}" class="form-control form--control mb-3" id="data"  required/>
+	  <input type=datetime-local th:field="*{data}" class="form-control form--control mb-3" id="data" name="data" required/>
 	  <script>document.getElementById('data').value = new Date().toISOString().substring(0, 10);</script>
 	</div>
 	
