@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class SchedinaEventi {
 	
 	@Id
-	private int idscedinaeventi;
+	private int idschedinaeventi;
 	
 	@ManyToOne
     @JoinColumn(name = "fk_schedina", referencedColumnName = "idschedina")
