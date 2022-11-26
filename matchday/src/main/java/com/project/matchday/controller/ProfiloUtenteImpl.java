@@ -16,6 +16,7 @@ import com.project.matchday.interfaces.ProfiloUtenteService;
 import com.project.matchday.interfaces.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Controller
 @SessionAttributes("utente")
@@ -55,52 +56,45 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	}
 	@Override
 	@RequestMapping(value="/preleva", method = RequestMethod.POST) 
-	public ModelAndView preleva(@RequestParam("numPre") Double importo) {
+	public String preleva( @RequestParam("numPre") Double importo) {
 		Utente utente = visualizzaProfilo();
-		String risultato = "";
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("profiloUtente");
-		
 		if(utente.getSaldo() >= importo) {
 		Double saldo = utente.getSaldo() - importo;
 		utente.setSaldo(saldo);
-		userRep.save(utente);}
+		userRep.save(utente);
+		return "redirect:profiloUtente";}
 		else {
-			risultato = "SALDO INSUFFICIENTE";
-			System.out.println("saldo insufficiente");
+			return "redirect:profiloUtente";
 		}
-
-        mav.addObject("risultato", risultato);
-		mav.setViewName("profiloUtente");
-	    return mav;	
-		
-		
 	}
 	
 @RequestMapping(value = "profiloUtente")
 	public ModelAndView getProfiloUtente() {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("profiloUtente");
+		List<Schedina> schedinaList = visualizzaSchedine();
         Utente utente = visualizzaProfilo();
         mav.addObject("utente", utente);
+        mav.addObject("schedinaList",schedinaList);
 		mav.setViewName("profiloUtente");
 	    return mav;	
 	    
 	}
 	
-	@Override
-	@RequestMapping(value="/deposita", method = RequestMethod.POST) 
-	public String deposita( @RequestParam("numDep") Double importo) {
-		Utente utente = visualizzaProfilo();
-		Double saldo = utente.getSaldo() + importo;
-		utente.setSaldo(saldo);
-		userRep.save(utente);
-		return "redirect:profiloUtente";
-		
-	}
+@Override
+@RequestMapping(value="/deposita", method = RequestMethod.POST) 
+public String deposita( @RequestParam("numDep") Double importo) {
+	Utente utente = visualizzaProfilo();
+	Double saldo = utente.getSaldo() + importo;
+	utente.setSaldo(saldo);
+	userRep.save(utente);
+	return "redirect:profiloUtente";}
+	
+}
+
+	
+	
 
 		
 		
-}
 	
