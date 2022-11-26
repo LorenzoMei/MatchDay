@@ -17,7 +17,7 @@ public interface ProfiloUtenteService {
 
 	List<Schedina> visualizzaSchedine();
 	void giocaSchedina(Schedina schedina);
-	ModelAndView preleva(Double importo);
+	String preleva(Double importo);
 	String deposita(Double importo);
 	Utente visualizzaProfilo();
 
