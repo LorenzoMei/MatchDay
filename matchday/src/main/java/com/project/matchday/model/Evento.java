@@ -94,5 +94,13 @@ public class Evento {
     public void setData(Quota quota) {
 		this.quota = quota;
     }
+		
+    @Column(name = "risultato")
+    public char getRisultato() {
+		return risultato;
+    }
+    public void setRisultato(char risultato) {
+		this.risultato = risultato;
+    }
     
 }
