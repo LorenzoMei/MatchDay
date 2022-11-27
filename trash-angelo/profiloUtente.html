@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" href="../../../resources/static/css/main.css">
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 <link rel="stylesheet" href="../css/lib/bootstrap.min.css" />
-<!-- Simplebar  -->
 <link rel="stylesheet" href="../css/lib/simplebar.min.css" />
-<!-- main css -->
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
@@ -19,64 +16,69 @@
 
 <title>Area Personale Utente</title>
 </head>
+
 <body>
+<!-- Barra Superiore -->
 <header class="header-primary" style="height: 400;" >
- <div class="container">
+ <div class="container-fluid">
 	    <div class="row g-0 align-items-center">
 	      <div class="col-5 col-lg-2">
 	        <!-- Logo  -->
 	        <a href="home" class="logo">
 	          MatchDay
 	        </a>
-	        <!-- Logo End -->
-	      </div>
-	 
-	      
-	   <div class="col-7 col-lg-10">    
-	    
-	     <nav class="primary-menu-container">
-	        	<a class="nav-link sport" onclick="myFunction()" href="#">Area Personale</a>
-	     
-          <a class="nav-link dropdown-toggle sport" data-bs-toggle="dropdown" href="#" role="button">Deposita</a>
-          
-          
-          <form class="navbar-form navbar-left" action="/deposita" method="post">
-          <ul class="dropdown-menu">
-          <li> <a class="dropdown-item" href="#"><input type="number" name="numDep" min="0" placeholder= "Inserire cifra Deposito"></a></li>
-          <li><a class="dropdown-item" href="profiloUtente"><input type="submit" value="Submit"></a></li>         
-      	  </ul>
-	      </form>
-	      
-	      <a class="nav-link dropdown-toggle sport" data-bs-toggle="dropdown" href="#" role="button">Preleva</a>
-          <form class="navbar-form navbar-left" action="/preleva" method="post">
-          <ul class="dropdown-menu">
-          
-          <li><a class="dropdown-item" href="#"><input type="number" name="numPre" min="0" placeholder = "Inserire cifra Prelievo"></a></li>
-          <li><a class="dropdown-item" href="profiloUtente"><input type="submit" value="Submit"> </a>
-          </li>
-         	<li> <a class="dropdown-item" th:text=${risultato}></a></li>
-      	  </ul>
-      	  </form> 
-	              
-          <a class="nav-link sport"  href="#">Storico Schedine</a>
-          
+		  </div>
+		  <div class="col-7 col-lg-10">
+		  
+		<div class="dropdown">
+		  <nav class="primary-menu-container">
+		  
+			 <!-- Apre e chiude info (forse meglio lasciare la scelta solo per storico schedine e non entrambe) -->
+			  <a class="nav-link sport" style=color:white onclick="myFunction()" href="#">Area Personale</a>
+			  	
 
-			    
-			  </nav>  
-			      </div> 
-			    </div>   
-	      </div>
-	</header>
+			  <!-- Bottone Deposita -->
+			  <a class="nav-link" style=color:white data-bs-toggle="dropdown" href="#" id="dropdownMenuButton1">Deposita</a>
+			  
+			  <!-- UNICO FORM PER EVITARE BUG -->
+			  <form method="post">
+			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+				  <li><a class="dropdown-item" href="#"><input type="number" name="numDep"  min=0 placeholder = "Inserire cifra Deposito"></a></li>
+				  
+	         	   <!-- IL FORMACTION PER DEPOSITARE E' QUI SOTTO -->
+	         	   <li><a class="dropdown-item" href="profiloUtente"><input class=minZero type="submit" name="submit" value="Deposita" formaction="/deposita"></a></li>
+	         	 
+			  </ul>
+			  
+				
+			  <!-- Bottone Preleva -->
+			  <a class="nav-link" style=color:white data-bs-toggle="dropdown" href="#" id="dropdownMenuButton2" >Preleva</a>
+			  <ul class="dropdown-menu 2"  aria-labelledby="dropdownMenuButton2">
+			  
+			  <!-- QUI SOTTO INSERENDO TH:MAX=${UTENTE.SALDO} SI OTTIENE POPUP, D'ALTRO CANTO SI BUGGA E BISOGNA REFRESHARE PER POTER NUOVAMENTE DEP E PRE -->
+				  <li><a class="dropdown-item" href="#"><input type="number" name="numPre" min=0  placeholder = "Inserire cifra Prelievo"></a></li>
+				  
+			<!-- IL FORMACTION PER PRELEVARE E' QUI SOTTO -->
+	         	  <li><a class="dropdown-item" href="profiloUtente"><input class=minZero type="submit" name="submit" value="Preleva" formaction="/preleva"></a></li>
+	         	  
+			  </ul>
+				</form>
+			
+			
+			<!-- Apre e chiude schedine -->
+			  <a class="nav-link sport" style=color:white onclick="myFunction2()" href="#">Storico Schedine</a>
+			  	
+		  </nav>
+		  </div>
+	
 
+</div></div></div></header>
 
-
-  
-
-
-<div class="profiloUtente section">
-<div class="card mx-auto" style=width:70%> 
+<!-- tabella INFO -->
+<div class="profiloUtente section" >
+<div class="card mx-auto" style=width:70% id="profiloUtente section"> 
 <table class="table" style="background-color: white" >
-    <tr >
+    <tr>
       <th scope="col">Nome</th>
       <td th:text=${utente.nome}></td>
     </tr>
@@ -84,59 +86,71 @@
       <th scope="col">Cognome</th>
       <td th:text=${utente.cognome}></td>
     </tr>
-    <tr >
+    <tr>
       <th scope="col">Email</th>
       <td th:text=${utente.email}></td>
     </tr>
-    <tr >
+    <tr>
       <th scope="col">Saldo</th>
       <td th:text=${utente.saldo}></td>
 	</tr>
 </table>
 </div>
 
-	<div class="container" id ="myDIV2">
+<!-- Card delle schedine -->
+	<div class="container" id="myDIV2">
 		<div class="row">
-	    	<div class="col-*-4">
-	    	</div>
-	    	<div class="col-*-4">
-	    		<br>
-	    		<div class="card" th:each="schedina,iter  : ${schedinaList}">
-				  <div class="card-body">
-				    <h5 class="card-title" th:inline="text" >[[${iter.count}]]
-				    <small>° SCHEDINA</small>
-				    </h5>
-				    <h6 class="card-title" th:inline="text"><small>Importo giocato:</small> [[${schedina.importo}]]</h6>
- <!--QUI CI VA IL FOR EACH CON I DETTAGLI EVENTO -->
+			<div class="col-*-4">
+				<br>
+				<div class="card" th:each="schedina,iter  : ${schedinaList}">
+					<div class="card-body">
+						<h5 class="card-title" th:inline="text">
+							[[${iter.count}]] <small>° SCHEDINA</small>
+						</h5>
+						<h6 class="card-title" th:inline="text">
+							<small>Importo giocato:</small> [[${schedina.importo}]]
+						</h6>
+						<div></div>
 
-				  </div>
+					</div>
 				</div>
-	    	</div>
-	    	<div class="col-*-4">
-	    	</div>
-	 	</div></div>
-	 	
-	 	
-<div class="container">
-<h6 th:each="schedinaEvento : $"> </h6></div>	 	
-	 	
-	 	
-	 	
-	 	
-	 	
-</div>
+			</div>
+		</div>
+	</div></div>
+	
 
 
 
 
-	 
-<script>function myFunction() {
-	  var x = document.getElementById("myDIV");
-	  if (x.style.display === "none") {
-	    x.style.display = "block";
-	  } else {
-	    x.style.display = "none";
-	  }
-	}</script>
-</body>
+<!-- Funzioni comparsa scomparsa di info e schedine -->
+	<script>
+		function myFunction() {
+			var x = document.getElementById("profiloUtente section");
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+		}
+		function myFunction2() {
+			var x = document.getElementById("myDIV2");
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+		}
+		
+		$(".minZero").blur(function () {
+	        if ($(this).val() == "") {
+	            $(this).val(0);
+	        } 
+	    })
+	</script>
+		 
+
+
+
+
+</body> 
 </html>
