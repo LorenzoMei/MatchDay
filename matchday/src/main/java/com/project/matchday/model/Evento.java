@@ -29,6 +29,7 @@ public class Evento {
 	private String squadraOspite;
 	private String tipo;
 	private Date data;
+	private char risultato;
 	@ManyToOne
 	@JoinColumn(name = "fk_quote", referencedColumnName="idquote")
 	private Quota quota;
@@ -36,11 +37,12 @@ public class Evento {
 	public Evento() {
 	}
 
-	public Evento(String squadraCasa, String squadraOspite, String tipo, Date data, Quota quota) {
+	public Evento(String squadraCasa, String squadraOspite, String tipo, Date data, char risultato, Quota quota) {
 		this.squadraCasa = squadraCasa;
 		this.squadraOspite = squadraOspite;
 		this.tipo = tipo;
 		this.data = data;
+		this.risultato = risultato;
 		this.quota = quota;
 	}
     
