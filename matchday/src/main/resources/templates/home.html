@@ -253,23 +253,34 @@
 			
 			var importo = document.getElementById("importo").value;
 			
-			//for (var i = 0; i < schedina.lenght; i++) {
-				//JSON.stringify(schedina[i]);				 
-			//}
-			
 			if(parseInt(importo) > 1){
-				//$.ajax({
-					//	type:"POST",
-						//url:'http://localhost:8080/gioca',
-					//	contentType: "application/json",
-	                //    data: {"schedina" : JSON.stringify(schedina), "importo" : importo}
-	                    
-				//});
 				
-				$.post(
-						"http://localhost:8080/gioca",
-						{ schedina:JSON.stringify(schedina) , importo}
-				);
+				var url = 'http://localhost:8080/gioca'
+				var data = {'schedinaGiocata' : JSON.stringify(schedina), 'importo' : importo};
+				
+				$.ajax({
+						type:"POST",
+						url: url,
+						contentType: "application/json",
+	                    data: JSON.stringify(data)
+					});
+				
+				 	
+				
+            		//let request = new XMLHttpRequest();
+ 
+		            //request.open('POST', 'http://localhost:8080/gioca', true);
+		            //request.setRequestHeader('Content-type',
+		                //'application/json; charset=UTF-8');
+					//request.setRequestHeader('Sec-Fetch-Mode',
+				                //'no-cors');
+		            //request.send(JSON.stringify(data));
+		 
+		            //request.onload = function () {
+		                //if (request.status === 201) {
+		                    //alert("Data posted successfully!");
+		                //}
+		            //}
 			}
 			else{
 				alert("Non puoi giocare questo importo");
