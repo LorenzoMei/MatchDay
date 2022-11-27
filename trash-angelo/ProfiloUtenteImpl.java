@@ -2,7 +2,10 @@ package com.project.matchday.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,9 +82,9 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 		ModelAndView mav = new ModelAndView();
 		List<Schedina> schedinaList = visualizzaSchedine();
         Utente utente = visualizzaProfilo();
-        List<SchedinaEventi> schedinaEventiList = new ArrayList();
+        Map<Schedina,List<SchedinaEventi>> schedinaEventiList = new HashMap();
         for(Schedina s : schedinaList) {
-        schedinaEventiList.addAll(schedinaEventiRep.getSchedinaEventiBySchedina(s));
+        schedinaEventiList.put(s,schedinaEventiRep.getSchedinaEventiBySchedina(s));
         }
         mav.addObject("utente", utente);
         mav.addObject("schedinaList",schedinaList);
@@ -93,12 +96,13 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	
 @Override
 @RequestMapping(value="/deposita", method = RequestMethod.POST) 
-public String deposita( @RequestParam("numDep") Double importo) {
+public String deposita(@RequestParam("numDep") Double importo) {
 	Utente utente = visualizzaProfilo();
 	Double saldo = utente.getSaldo() + importo;
 	utente.setSaldo(saldo);
 	userRep.save(utente);
-	return "redirect:profiloUtente";}
+	return "redirect:profiloUtente";
+	}
 	
 }
 
