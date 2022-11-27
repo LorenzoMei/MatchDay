@@ -2,6 +2,8 @@ package com.project.matchday.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -59,12 +61,47 @@ public class AdminImpl implements AdminService{
 		quotaRepository.save(quota);
 		ArrayList<Quota> quoteAll = new ArrayList<Quota>(quotaRepository.findAll());
 		Quota quotaUltima= quoteAll.get(quoteAll.size() - 1);
-    	Evento evento = new Evento(appoggioEvento.getSquadraCasa(),appoggioEvento.getSquadraOspite(),appoggioEvento.getTipo(),appoggioEvento.getData(),quotaUltima);
+    	Evento evento = new Evento(appoggioEvento.getSquadraCasa(),appoggioEvento.getSquadraOspite(),appoggioEvento.getTipo(),appoggioEvento.getData(),'-',quotaUltima);
     	eventiRepository.save(evento);
 	}
 	
+	public char randomRes(String tipo) {
+		
+		Random rn = new Random();
+		int res;
+		char fin;
+		
+		if (tipo.equals("calcio")) {
+			res = rn.nextInt(3);
+		}else {
+			res = rn.nextInt(2)+1;
+		}
+		
+		if (res == 1 || res == 2) {
+			fin = (char)(res + '0');
+		}else {
+			fin = 'X';
+		}
+		
+		return fin;
+	}
+
+	
 	public void generaRisultati() {
-		//////////////////////
+		//Carico tutti gli eventi		
+		
+		ArrayList<Evento> listaEventi =  (ArrayList<Evento>)eventiRepository.findAll();
+		
+		//Genero un risultato per ogni evento e lo salvo
+		
+		for(Evento evento: listaEventi) {
+			char res = evento.getRisultato();
+			if(res == '-') {
+				String tipo = evento.getTipo();
+				evento.setRisultato(randomRes(tipo));
+				eventiRepository.save(evento);
+			}
+		}
 	}
 	
 	
@@ -105,35 +142,42 @@ public class AdminImpl implements AdminService{
 	}
 	
 	@PostMapping(value = "addEvent")
-    public ModelAndView RegistraEvento(@ModelAttribute("registerEventFull") AppoggioEvento appoggioEvento, BindingResult bindingResult) {
+    public ModelAndView registraEvento(@ModelAttribute("registerEventFull") AppoggioEvento appoggioEvento, BindingResult bindingResult) {
     	ModelAndView mav = new ModelAndView();
     	
     	if (bindingResult.hasErrors()) {
-    		System.out.println("IF -----------");
-    		System.out.println("quota1:  "+appoggioEvento.getQuotaCasa());
-    		System.out.println("quotaX:  "+appoggioEvento.getQuotaPareggio());
-    		System.out.println("quota2:  "+appoggioEvento.getQuotaOspite());
-    		System.out.println("casa:  "+appoggioEvento.getSquadraCasa());
-    		System.out.println("ospite:  "+appoggioEvento.getSquadraOspite());
-    		System.out.println("data:  "+appoggioEvento.getData());
-    		System.out.println("tipo:  "+appoggioEvento.getTipo());
             return mav;
     	}
     	else { 
             try {
-        		System.out.println("TRY -----------");
         		aggiungiEvento(appoggioEvento);
             	return new ModelAndView("home");
             	}
             catch (Exception exception) {
-        		System.out.println("CATCH -----------");
-
                 bindingResult.rejectValue("squadraCasa", "error.registerEventFull", exception.getMessage());
                 return mav;
             }
     	}
     	
     }
+	
+	@GetMapping(value = "simulazione")
+	public ModelAndView simulazione() {
+		
+		ModelAndView mav = new ModelAndView("profileAdmin");
+		return mav;
+	}
+	
+	@PostMapping(value = "simulazione")
+	public ModelAndView simul() {
+		
+		generaRisultati();
+		ModelAndView mav = new ModelAndView("profileAdmin");
+		return mav;
+	}
+	
 
 }
+
+
 
