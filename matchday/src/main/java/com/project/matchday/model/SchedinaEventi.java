@@ -6,17 +6,22 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "schedina_eventi")
 public class SchedinaEventi {
 	
 	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
 	private int idschedinaeventi;
 	
 	@ManyToOne
@@ -29,15 +34,15 @@ public class SchedinaEventi {
 	
 	@ManyToOne(targetEntity = Evento.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_eventi", referencedColumnName = "ideventi")
-	private ArrayList<Evento> listaEventi;
+	private Evento evento;
 	
 	public SchedinaEventi() {
 	}
 	
-	public SchedinaEventi(Schedina schedina, char giocata, ArrayList<Evento> listaEventi) {
+	public SchedinaEventi(Schedina schedina, char giocata, Evento evento) {
 		this.schedina = schedina;
 		this.giocata = giocata;
-		this.listaEventi = listaEventi;
+		this.evento = evento;
 	}
 
 	
@@ -49,11 +54,11 @@ public class SchedinaEventi {
     }
     
 	
-    public ArrayList<Evento> getListaEventi() {
-		return listaEventi;
+    public Evento getListaEventi() {
+		return evento;
     }
-    public void setListaEventi(ArrayList<Evento> listaEventi) {
-		this.listaEventi = listaEventi;
+    public void setListaEventi(Evento evento) {
+		this.evento = evento;
     }
     
 	

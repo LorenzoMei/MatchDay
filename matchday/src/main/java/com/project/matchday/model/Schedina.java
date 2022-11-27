@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -27,6 +29,15 @@ public class Schedina {
 	public Schedina(double importo, Utente utente) {
 		this.importo = importo;
 		this.utente= utente;
+	}
+	
+	
+	public int getIdSchedina() {
+		return idSchedina;
+	}
+
+	public void setIdSchedina(int idSchedina) {
+		this.idSchedina = idSchedina;
 	}
 
 	@Column(name = "importo")
