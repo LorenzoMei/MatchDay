@@ -44,6 +44,14 @@ public class Evento {
 		this.quota = quota;
 	}
     
+	public int getIdEvento() {
+		return idEvento;
+	}
+
+	public void setIdEvento(int idEvento) {
+		this.idEvento = idEvento;
+	}
+	
 	@Column(name = "squadra_casa")
     public String getSquadraCasa() {
 		return squadraCasa;
