@@ -8,8 +8,9 @@ import org.springframework.data.repository.query.Param;
 
 import com.project.matchday.model.Evento;
 
-public interface EventiRepository extends JpaRepository<Evento, String>{
+public interface EventiRepository extends JpaRepository<Evento, Integer>{
 	
+	Evento findById(int id);
 	ArrayList<Evento> getEventiByTipo(String tipo);
 	Evento getEventiByIdEvento(int idEvento);
 }
