@@ -6,9 +6,10 @@ import java.util.Map;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.matchday.model.Evento;
+import com.project.matchday.model.SchedinaAjax;
 
 public interface HomeService {
 	
 	ModelAndView visualizzaEventiPerTipo(String tipo);
-	ModelAndView giocaSchedina(String schedina, double importo);
+	ModelAndView giocaSchedina(SchedinaAjax schedinaAjax);
 }

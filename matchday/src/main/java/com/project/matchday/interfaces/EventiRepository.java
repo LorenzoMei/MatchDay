@@ -11,4 +11,5 @@ import com.project.matchday.model.Evento;
 public interface EventiRepository extends JpaRepository<Evento, String>{
 	
 	ArrayList<Evento> getEventiByTipo(String tipo);
+	Evento getEventiByIdEvento(int idEvento);
 }
