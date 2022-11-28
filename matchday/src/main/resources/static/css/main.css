@@ -5686,7 +5686,6 @@ textarea.form--control:focus {
     background-size: cover;
     background-position: center bottom;
     background-repeat: no-repeat;
-    height: 100%;
     width: 100%;
 }
 
