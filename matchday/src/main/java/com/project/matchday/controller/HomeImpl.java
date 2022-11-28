@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.project.matchday.interfaces.EventiRepository;
 import com.project.matchday.interfaces.HomeService;
 import com.project.matchday.interfaces.ProfiloRepository;
@@ -45,14 +47,24 @@ public class HomeImpl implements HomeService{
 	private SchedinaEventiRepository schedinaEventiRep;
 	
 	@Override
-	@GetMapping(value = "home")
+	@GetMapping(value = {"/","home"})
 	public ModelAndView visualizzaEventiPerTipo(
 			@RequestParam(name="tipo", required = false, defaultValue = "calcio") String tipo) {
 		
 		ModelAndView mav = new ModelAndView();
 		
 		ArrayList<Evento> listaEventi =  eventiRepository.getEventiByTipo(tipo);
-				
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Utente utente = userRep.findByEmail(auth.getName());
+		if(utente != null) {
+			double saldo = utente.getSaldo();
+			mav.addObject("saldo", saldo);
+		}
+		else {
+			mav.addObject("saldo", 0);
+		}
+		
 		mav.addObject("listaEventi", listaEventi);
 		mav.setViewName("home");
 		
@@ -60,12 +72,13 @@ public class HomeImpl implements HomeService{
 	}
 
 	@Override
-	@PostMapping(value = "gioca", consumes={"application/json","application/json"})
+	@PostMapping(value = "gioca", consumes={"application/json"})
+	@ResponseBody
 	public String giocaSchedina( @Valid @RequestBody SchedinaAjax schedinaAjax) {
 		String stato = "";
 		
 		//Parsing dati da JSON ad array di oggetti SchedinaGiocata
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 		SchedinaGiocata[] schedinaGiocata = gson.fromJson(schedinaAjax.getSchedinaGiocata(), SchedinaGiocata[].class);
 		
 		double importo = Double.valueOf(schedinaAjax.getImporto());
