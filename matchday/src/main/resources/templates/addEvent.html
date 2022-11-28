@@ -132,6 +132,24 @@
 				  var quotaPareggio = document.getElementById("quotaPareggio");
 				  var quotaOspite = document.getElementById("quotaOspite");
 
+				  if (quotaCasa.value.includes(",")) {
+					    alert("La quota deve essere segnata con un punto ( . ) non virgola ( , )!!!");
+			            e.preventDefault() ;
+			            returnToPreviousPage();
+					  }
+				  
+				  if (quotaPareggio.value.includes(",")) {
+					    alert("La quota deve essere segnata con un punto ( . ) non virgola ( , )!!!");
+			            e.preventDefault() ;
+			            returnToPreviousPage();
+					  }
+				  
+				  if (quotaOspite.value.includes(",")) {
+					    alert("La quota deve essere segnata con un punto ( . ) non virgola ( , )!!!");
+			            e.preventDefault() ;
+			            returnToPreviousPage();
+					  }
+				  
 				  if (quotaCasa.value == 0) {
 				    alert("La quota della squadra di casa è 0!!!");
 		            e.preventDefault() ;
