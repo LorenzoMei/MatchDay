@@ -32,36 +32,41 @@
 		  
 		<div class="dropdown">
 		  <nav class="primary-menu-container">
-		  
-			 <!-- Apre e chiude info (forse meglio lasciare la scelta solo per storico schedine e non entrambe) -->
-			  <a class="nav-link sport" style=color:white onclick="myFunction()" href="#">Area Personale</a>
 			  	
 
-			  <!-- Bottone Deposita -->
+			  <!-- Bottone DEPOSITA -->
 			  <a class="nav-link" style=color:white data-bs-toggle="dropdown" href="#" id="dropdownMenuButton1">Deposita</a>
 			  
 			  <!-- UNICO FORM PER EVITARE BUG -->
-			  <form method="post">
+			  <form method="post" th:object="${deposito}">
+			  
 			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				  <li><a class="dropdown-item" href="#"><input type="number" name="numDep"  min=0 placeholder = "Inserire cifra Deposito"></a></li>
+				  <li><a class="dropdown-item" href="#"><input type="text" id="importo" th:field="*{importo}"   placeholder = "Inserire cifra Deposito"></a>
+				  <small class="text-danger" th:if="${#fields.hasErrors('importo')}" th:errors="*{importo}" >Errore</small>
+				  </li>
 				  
 	         	   <!-- IL FORMACTION PER DEPOSITARE E' QUI SOTTO -->
-	         	   <li><a class="dropdown-item" href="profiloUtente"><input class=minZero type="submit" name="submit" value="Deposita" formaction="/deposita"></a></li>
+	         	   <li><a class="dropdown-item" href="profiloUtente"><input type="submit" name="submit" value="Deposita" formaction="/deposita"></a></li>
 	         	 
 			  </ul>
+			  </form>
 			  
 				
-			  <!-- Bottone Preleva -->
+			  <!-- Bottone PRELEVA -->
+			   <form method="post" th:object="${prelievo}">
 			  <a class="nav-link" style=color:white data-bs-toggle="dropdown" href="#" id="dropdownMenuButton2" >Preleva</a>
 			  <ul class="dropdown-menu 2"  aria-labelledby="dropdownMenuButton2">
 			  
 			  <!-- QUI SOTTO INSERENDO TH:MAX=${UTENTE.SALDO} SI OTTIENE POPUP, D'ALTRO CANTO SI BUGGA E BISOGNA REFRESHARE PER POTER NUOVAMENTE DEP E PRE -->
-				  <li><a class="dropdown-item" href="#"><input type="number" name="numPre" min=0  placeholder = "Inserire cifra Prelievo"></a></li>
+				  <li><a class="dropdown-item" href="#"><input type="text" id="importo" th:field="*{importo}" placeholder = "Inserire cifra Prelievo"></a>
+				  <small class="text-danger" th:if="${#fields.hasErrors('importo')}" th:errors="*{importo}" >Errore</small>
+				  </li>
 				  
 			<!-- IL FORMACTION PER PRELEVARE E' QUI SOTTO -->
-	         	  <li><a class="dropdown-item" href="profiloUtente"><input class=minZero type="submit" name="submit" value="Preleva" formaction="/preleva"></a></li>
+	         	  <li><a class="dropdown-item" href="profiloUtente"><input type="submit" name="submit" value="Preleva" formaction="/preleva"></a></li>
 	         	  
 			  </ul>
+			  
 				</form>
 			
 			
@@ -110,7 +115,33 @@
 						<h6 class="card-title" th:inline="text">
 							<small>Importo giocato:</small> [[${schedina.importo}]]
 						</h6>
-						<h6 class="card-title" >[[${schedinaEventiList.get(schedina)}]]</h6>
+						<table class="table" id="tableDettagli">
+					  <thead>
+					    <tr>
+					      <th scope="col">N°</th>
+					      <th scope="col">Squadra Casa</th>
+					      <th scope="col">Squadra Osptite</th>
+					      <th scope="col">Data</th>
+					      <th scope="col">Tipologia</th>
+					      <th scope="col">Giocata</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr class="card-title" th:each="evento,iter  : ${eventiPerSchedinaList.get(schedina)}">
+					      <th scope="row">[[${iter.count}]]</th>
+					      <td>[[${evento.squadraCasa}]]</td>
+					      <td>[[${evento.squadraOspite}]]</td>
+					      <td>[[${evento.data}]]</td>
+					      <td>[[${evento.tipo}]]<td>
+					      <td>[[${schedinaEventiPerSchedinaList.get(schedina)[iter.index].giocata}]]</td>
+					      
+
+					    </tr>
+					    </tbody>
+					    </table>
+					  
+						
+
 
 					</div>
 				</div>
@@ -124,6 +155,12 @@
 
 <!-- Funzioni comparsa scomparsa di info e schedine -->
 	<script>
+	
+document.getElementById('myDIV2').style.display = 'none';
+	
+	
+	
+	//SUPERFLUO SICCOME HO RIMOSSO TASTO AREA PERSONALE
 		function myFunction() {
 			var x = document.getElementById("profiloUtente section");
 			if (x.style.display === "none") {
@@ -141,11 +178,16 @@
 			}
 		}
 		
-		$(".minZero").blur(function () {
-	        if ($(this).val() == "") {
-	            $(this).val(0);
-	        } 
-	    })
+		
+document.getElementById("numDep").addEventListener("numDep",
+				function func(){
+		var userInput = document.getElementById("numDep").value;
+		if(typeof userInput == "number"){
+		  console.log("Is a number");
+		}else{
+		  console.log("Is not a number");
+		}},true);
+
 	</script>
 		 
 

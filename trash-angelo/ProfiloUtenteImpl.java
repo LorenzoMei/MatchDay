@@ -6,14 +6,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.matchday.model.EffettuaOperazioni;
 import com.project.matchday.model.Evento;
 import com.project.matchday.model.Schedina;
 import com.project.matchday.model.SchedinaEventi;
@@ -44,7 +49,6 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	public List<Schedina> visualizzaSchedine(){
 		Utente utente = visualizzaProfilo();
 		List<Schedina> schedinaList = profiloRep.getSchedineByUtente(utente);
-		System.out.println(schedinaList.size());
 		return schedinaList;
 	}
 	
@@ -63,19 +67,7 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 		
 		profiloRep.save(s);
 	}
-	@Override
-	@RequestMapping(value="/preleva", method = RequestMethod.POST) 
-	public String preleva( @RequestParam("numPre") Double importo) {
-		Utente utente = visualizzaProfilo();
-		if(utente.getSaldo() >= importo) {
-		Double saldo = utente.getSaldo() - importo;
-		utente.setSaldo(saldo);
-		userRep.save(utente);
-		return "redirect:profiloUtente";}
-		else {
-			return "redirect:profiloUtente";
-		}
-	}
+	
 	
 	
 @RequestMapping(value = "profiloUtente")
@@ -99,40 +91,82 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
         		}
         		eventiPerSchedinaList.put(schedinaList.get(i), eventiList);
         		}
-        	/////
-   
-        }
-        
-for(int s = 0; s< schedinaList.size(); s++ ) {
-	System.out.println( schedinaList.get(s).getImporto());
-
-		List<Evento> eventiList2 = eventiPerSchedinaList.get(schedinaList.get(s));
-		for(int k = 0; k < eventiList2.size(); k++ ) {
-	System.out.println(eventiList2.get(k).getTipo());
-	System.out.println(eventiList2.get(k).getSquadraCasa());
-	System.out.println(eventiList2.get(k).getSquadraOspite());
-}}
+        } 
 
         mav.addObject("schedinaEventiPerSchedinaList",schedinaEventiPerSchedinaList);
         mav.addObject("utente", utente);
         mav.addObject("schedinaList",schedinaList);
         mav.addObject("eventiPerSchedinaList",eventiPerSchedinaList);
+        mav.addObject("deposito",new EffettuaOperazioni());
+        mav.addObject("prelievo",new EffettuaOperazioni());
 		mav.setViewName("profiloUtente");
+		
 	    return mav;	
 	    
 	}
+
+@Override
+@RequestMapping(value="/preleva", method = RequestMethod.POST) 
+public String preleva(@Valid @ModelAttribute("prelievo") EffettuaOperazioni importo, BindingResult bindingResult) {
+	if (bindingResult.hasErrors()) {
+		System.out.println("sono qui1");
+		bindingResult.rejectValue("importo","error", "Numero non valido");
+        return "/profiloUtente";
+	}
+	else {
+        try {
+        	Utente utente = visualizzaProfilo();
+        	if( importo.getImporto() < 0 || importo.getImporto() > utente.getSaldo()  ) {
+        		System.out.println("QUI2");
+        		bindingResult.rejectValue("importo","error", "Numero non valido");
+        		return "/profiloUtente";
+        	} else {
+        		System.out.println("QUI3");
+        		System.out.println(utente.getSaldo());
+        		System.out.println(importo.getImporto());
+	        	Double saldo = utente.getSaldo() - importo.getImporto();
+	        	utente.setSaldo(saldo);
+	        	userRep.save(utente);
+	        	System.out.println(utente.getSaldo());
+	        	return "redirect:profiloUtente";
+        		}
+        	}
+    	
+        catch (Exception exception) {
+            bindingResult.rejectValue("importo","error",  "Impossibile depositare!");
+            return "/profiloUtente";
+        	}
+        }
+	}
+
 	
 @Override
 @RequestMapping(value="/deposita", method = RequestMethod.POST) 
-public String deposita(@RequestParam("numDep") Double importo) {
-	Utente utente = visualizzaProfilo();
-	Double saldo = utente.getSaldo() + importo;
-	utente.setSaldo(saldo);
-	userRep.save(utente);
-	return "redirect:profiloUtente";
+public String deposita(@Valid @ModelAttribute("deposito") EffettuaOperazioni importo, BindingResult bindingResult) {
+	if (bindingResult.hasErrors()) {
+		bindingResult.rejectValue("importo","error", "Numero non valido");
+        return "/profiloUtente";
 	}
-	
+        else {
+            try {
+            	Utente utente = visualizzaProfilo();
+            	if( importo.getImporto() <0) {
+            		bindingResult.rejectValue("importo","error", "Numero non valido");
+            		return "/profiloUtente";
+            	}
+            	Double saldo = utente.getSaldo() + importo.getImporto();
+            	utente.setSaldo(saldo);
+            	userRep.save(utente);
+            	return "redirect:profiloUtente";
+            	}
+            catch (Exception exception) {
+                bindingResult.rejectValue("importo","error.deposito",  "Impossibile depositare!");
+                return "/profiloUtente";
+            }
+    	}
+	}
 }
 
+	
 	
 	
