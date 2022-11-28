@@ -172,7 +172,7 @@ public class AdminImpl implements AdminService{
 							quotaGiocata = quota.getQuotaPareggio();
 						}
 						
-						quotaVincita += (double)quotaGiocata;
+						quotaVincita *= (double)quotaGiocata;
 					}
 					//calcolo la vincita
 					double vincita = quotaVincita * schedina.getImporto();
