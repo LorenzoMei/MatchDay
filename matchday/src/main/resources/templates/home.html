@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" href="../../../resources/static/css/main.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,115 +27,168 @@
 	      </div>
 	      <div class="col-7 col-lg-10">
 	        <nav class="primary-menu-container">
-	        	<a class="nav-link sport" href="home?tipo=calcio">Calcio</a>
-	        	<a class="nav-link sport" href="home?tipo=pallavolo">Pallavolo</a>
-	        	<a class="nav-link sport" href="home?tipo=basket">Basket</a>
-	        	<a class="navbar-brand" href="profiloUtente">
-			      <img src="/images/user_icon.png" alt="Logo" style="width:40px;" class="rounded-pill">
-			    </a>
-	        </nav>
-	      </div>
+	        <ul class="list list--row primary-menu-lg">
+	        <li>
+              <a href="home?tipo=calcio" class="nav-link sport"> Calcio </a>
+            </li>
+            <li>
+              <a href="home?tipo=pallavolo" class="nav-link sport"> Pallavolo </a>
+            </li>
+            <li>
+              <a href="home?tipo=basket" class="nav-link sport"> Basket </a>
+            </li>
+	        </ul>
+	        <ul class="list list--row primary-menu justify-content-end align-items-center">
+	         <li>
+              <div class="custom-dropdown">
+                <div class="custom-dropdown__user" data-set="custom-dropdown">
+                  <img src="/images/user_icon.png" alt="image" class="custom-dropdown__user-img">
+                </div>
+                <div class="custom-dropdown__content custom-dropdown__content-end">
+                  <div class="custom-dropdown__body" data-simplebar>
+                    <ul class="list list--column custom-dropdown__list">
+                      <li>
+                        <a href="profiloUtente" class="custom-dropdown__body-link">
+                          <span class="custom-dropdown__body-text">
+                            Area Personale
+                          </span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="logout" class="custom-dropdown__body-link">
+                          <span class="custom-dropdown__body-text">
+                            Logout
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+	     </nav>    
 	    </div>
+	   </div>
 	  </div>
 	</header>
 
 	
-<div class="home-page section">
-	<div class="container">
-		<div class="row">
-	    	<div class="col-2">
-	    	</div>
-	    	<div class="col-8">
-	    		<div class="container"  th:each="evento : ${listaEventi}">
-		    		<div class="card card-shadow">
-					  <div class="card-body">
-					  	<div class="row">
-					  		<div class="col-6">
-					  			<h4 style="margin:1rem 0 1rem">
-							   		[[${evento.squadraCasa}]] - [[${evento.squadraOspite}]]
-								</h4>
-					  		</div>
-						  	
-							<div class="col-6" style="text-align: right;">
-								<p style="margin:1rem 0 1rem"> [[${evento.data}]]</p>									
-							</div>
-						</div>
-						
-						
-						<div class="row">
-							<div class="col-4">
-								<h6 style="text-align:center">1</h6>
-								<div class="container" style="text-align:center">
-									<button class="container-quote" th:id="'quotaCasa' + ${evento.idEvento}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaCasa}]], '1', [[${evento.idEvento}]])">
+<main class="home-page">
+<!-- Sports Category -->
+    <div class="col-sm-1 col-lg-1 col-xl-1 col-xxl-1"></div>
+    <!-- Sports Category End -->
+	<!-- Sports body  -->
+    <div class="sports-body col-sm-8 col-lg-8 col-xl-8 col-xxl-8">
+        <div class="container-fluid" >
+            <div class="row g-2">
+                <div class="col-sm-6 col-lg-6 col-xl-6 col-xxl-6" th:each="evento,iter : ${listaEventi}">
+                    <div class="sports-card" >
+                        <span class="sports-card__head">
+                            <span class="sports-card__team">
+                            <span class="sports-card__team-flag">
+                            		[[${evento.squadraCasa.charAt(0)}]]
+                                </span>
+                                <span class="sports-card__team-name">[[${evento.squadraCasa}]]
+                                </span>
+                            </span>
+                            <span class="sports-card__info text-center">
+                                <span class="sports-card__info-time">
+                                   [[${#dates.format(evento.data, 'yyyy-MM-dd hh:mm')}]]
+                                   
+                                </span>
+                            </span>
+                            <span class="sports-card__team">
+                            <span class="sports-card__team-flag">
+                            [[${evento.squadraOspite.charAt(0)}]]
+                                </span>
+                                <span class="sports-card__team-name"> [[${evento.squadraOspite}]]</span>
+                            </span>
+                            
+                        </span>
+                        <span class="sports-card__list">
+                            <span class="sports-card__list-item">
+                                <span class="sports-card__list-name">
+                                    1
+                                </span>
+                                <span class="sports-card__list-count">
+                                    <button class="container-quote" th:id="'quotaCasa' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${#dates.format(evento.data, 'yyyy-MM-dd HH:mm:ss')}]], [[${evento.quota.quotaCasa}]], '1', [[${iter.count}]])">
 									[[${evento.quota.quotaCasa}]]
 									</button>
-								</div>
-							</div>
-							
-							<div class="col-4">
-								<h6 style="text-align:center">X</h6>
-								<div class="container" style="text-align:center" th:if="${evento.quota.quotaPareggio != -1}">
-									<button class="container-quote" th:id="'quotaPareggio' + ${evento.idEvento}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaPareggio}]], 'X', [[${evento.idEvento}]])">
+                                </span>
+                            </span>
+                            <span class="sports-card__list-item">
+                                <span class="sports-card__list-name">
+                                    X
+                                </span>
+                                <span class="sports-card__list-count">
+                                    <button class="container-quote" th:id="'quotaPareggio' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${#dates.format(evento.data, 'yyyy-MM-dd HH:mm:ss')}]], [[${evento.quota.quotaPareggio}]], 'X', [[${iter.count}]])">
 										[[${evento.quota.quotaPareggio}]]
 									</button>
-								</div>
-							</div>
-							
-							<div class="col-4">
-								<h6 style="text-align:center">2</h6>
-								<div class="container" style="text-align:center">
-									<button class="container-quote" th:id="'quotaOspite' + ${evento.idEvento}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${evento.data}]], [[${evento.quota.quotaOspite}]], '2', [[${evento.idEvento}]])">
+                                </span>
+                            </span>
+                            <span class="sports-card__list-item">
+                                <span class="sports-card__list-name">
+                                    2
+                                </span>
+                                <span class="sports-card__list-count">
+                                    <button class="container-quote" th:id="'quotaOspite' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${#dates.format(evento.data, 'yyyy-MM-dd HH:mm:ss')}]], [[${evento.quota.quotaOspite}]], '2', [[${iter.count}]])">
 										[[${evento.quota.quotaOspite}]]
 									</button>
-								</div>
-							</div>
-							
-						</div>
-						
-					  </div>
-					</div>
-					
-					<br>
-					
-				</div>
-	    	</div>
-	    	<div class="col-2" style="text-align:right">
-	    		<!-- La mia schedina  -->
-			    <div id="bet" class="betslip" style="visibility:hidden;">
-			        <div class="betslip__body" data-simplebar>
-			            <ul class="list betslip__list" id="betslipList">
-			               
-			            </ul>
-			        </div>
-			        <div class="betslip__footer">
-			            <ul class="list betslip__footer-list">
-			                <li>
-			                    <input type="text" id="importo" class="form-control" placeholder="Inserisci importo">
-			                </li>
-			            </ul>
-			            <div class="betslip__footer-bottom">
-			                <button type="button" class="btn btn--base btn--md sm-text betslip__footer-btn" onclick="giocaSchedina()">
+                                </span>
+                            </span>
+                        </span>
+                </div>
+            </div>
+          </div>
+       </div>
+    </div>    	
+	
+	<!-- La mia schedina  -->
+    <div id="bet" class="betslip" style="visibility:hidden;">
+    	<br>
+        <div class="betslip__head">
+            <div class="betslip__head-content">Saldo: [[${saldo}]]</div>
+            <div class="betslip__head-switch">
+                <div class="form-check form-switch">
+                </div>
+            </div>
+        </div>
+        <div class="betslip__body" data-simplebar>
+            <ul class="list betslip__list" id="betslipList">
+                
+            </ul>
+        </div>
+        <div class="betslip__footer">
+            <ul class="list betslip__footer-list">     
+            <li>
+          			<span class="betslip__footer-text"> Vincita Potenziale: </span>
+          			<span class="betslip__footer-text" id="vincita"> </span>
+        	</li>
+        	<li>
+                    <input type="text" id="importo" class="form-control" placeholder="Inserisci importo" value="2" onchange="calcolaVincita(1)">
+            </li>
+            </ul>
+            <div class="betslip__footer-bottom">
+                <input type="number" class="form-control form--control betslip-form" placeholder="Enter Amount">
+                <button type="button" class="btn btn--base btn--md sm-text betslip__footer-btn" onclick="giocaSchedina()">
 			                    Gioca
 			                </button>
-			            </div>
-			        </div>
-			    </div>
-			    <!-- La mia Schedina END -->
-	    	</div>
-	 	</div>
-		
-	</div>
-	
-</div>
-
-	<script>
+            </div>
+            <br>
+        </div>
+    </div>
+    <!-- La mia Schedina END -->
+	    		<script>
 		
 		var schedina = [];
+		var quotaTotale = 0;
 		
 		function aggiungiEventoAllaSchedina(casa, ospite, tipo, data, quota, giocata, id){
 			
 			if(document.getElementById("li"+id) != null){
 				if(document.getElementById("i"+id).innerHTML != giocata){
+					rimuoviQuota(document.getElementById("div4-"+id).innerHTML);
 					document.getElementById("i"+id).innerHTML = giocata;
 					document.getElementById("div4-"+id).innerHTML = quota;
 					
@@ -155,7 +207,7 @@
 							quota : quota,
 							giocata : giocata
 					}
-					
+					calcolaVincita(quota);
 					schedina.push(evento);
 				}
 				else{
@@ -176,7 +228,7 @@
 						quota : quota,
 						giocata : giocata
 				}
-								
+				calcolaVincita(quota);			
 				schedina.push(evento);
 				
 				var newli = document.createElement("li");
@@ -231,22 +283,45 @@
 				var newI1 = document.createElement("i");
 				newI1.setAttribute("id", "i1-"+id);
 				newI1.setAttribute("class", "fa fa-remove betslip__list-ratio");
-				newI1.setAttribute("onclick", "rimuoviEvento("+ id +")");
+				newI1.setAttribute("onclick", "rimuoviEvento("+ id +"," + quota + ")");
 				document.getElementById("div5-"+id).appendChild(newI1);
 				
 			}
 		}
 		
-		function rimuoviEvento(id){
+		function rimuoviEvento(id, quota){
 			var parent = document.getElementById("betslipList");
 			var child = document.getElementById("li"+id);
 			parent.removeChild(child);
+			rimuoviQuota(quota);
 			
 			for (var i = 0; i < schedina.length; i++) {
 				  if(schedina[i].idEvento == id){
 					  schedina.splice(i, 1);
+					  
 				  }
 			}
+		}
+		
+		function calcolaVincita(quota){
+			
+			var parent = document.getElementById("betslipList");
+			if(parent.children.length == 0){
+				var importo = document.getElementById("importo").value;
+				quotaTotale = quota;
+				document.getElementById("vincita").innerHTML = quotaTotale * importo;
+			}
+			else{
+				quotaTotale = quotaTotale * quota;
+				var importo = document.getElementById("importo").value;
+				document.getElementById("vincita").innerHTML = Math.round(quotaTotale * importo *100) /100;
+				
+			}
+		}
+		
+		function rimuoviQuota(quota){
+			quotaTotale = quotaTotale / quota;
+			document.getElementById("vincita").innerHTML = Math.round(document.getElementById("vincita").innerHTML / quota * 100) / 100;
 		}
 		
 		function giocaSchedina(){
@@ -262,31 +337,102 @@
 						type:"POST",
 						url: url,
 						contentType: "application/json",
-	                    data: JSON.stringify(data)
+	                    data: JSON.stringify(data),
+	                    success:function(msg){
+	                    	alert(msg);
+	                    	location.reload();
+	                    }
 					});
-				
-				 	
-				
-            		//let request = new XMLHttpRequest();
- 
-		            //request.open('POST', 'http://localhost:8080/gioca', true);
-		            //request.setRequestHeader('Content-type',
-		                //'application/json; charset=UTF-8');
-					//request.setRequestHeader('Sec-Fetch-Mode',
-				                //'no-cors');
-		            //request.send(JSON.stringify(data));
-		 
-		            //request.onload = function () {
-		                //if (request.status === 201) {
-		                    //alert("Data posted successfully!");
-		                //}
-		            //}
 			}
 			else{
 				alert("Non puoi giocare questo importo");
 			}
 		}
 	</script>
+	   
+	<!-- App Nav  -->
+<div class="app-nav">
+  <div class="container-fluid">
+    <div class="row g-0">
+      <div class="col-12">
+        <ul class="app-nav__menu list list--row justify-content-between align-items-center">
+          <li>
+            <a href="home?tipo=calcio" class="app-nav__menu-link active">
+              <span class="app-nav__menu-text"> Calcio </span>
+            </a>
+          </li>
+          <li>
+            <a href="home?tipo=pallavolo" class="app-nav__menu-link">
+              <span class="app-nav__menu-text"> Pallavolo </span>
+            </a>
+          </li>
+          <li class="app-nav__menu-link-important-container">
+            <a href="" class="app-nav__menu-link-important">
+            </a>
+          </li>
+          <li>
+            <a href="home?tipo=basket" class="app-nav__menu-link">
+              <span class="app-nav__menu-text"> Basket </span>
+            </a>
+          </li>
+          <li>
+            <a href="profiloUtente" class="app-nav__menu-link">
+              <span class="app-nav__menu-text"> Account </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="app-nav__drawer" data-simplebar>
+    <ul class="list app-nav__drawer-list">
+      <li>
+        <a href="home?tipo=calcio" class="app-nav__drawer-link">
+          <span class="app-nav__drawer-text"> Calcio </span>
+        </a>
+      </li>
+      <li>
+        <a href="home?tipo=pallavolo" class="app-nav__drawer-link">
+          <span class="app-nav__drawer-text"> Pallavolo </span>
+        </a>
+      </li>
+      <li>
+        <a href="home?tipo=basket" class="app-nav__drawer-link">
+          <span class="app-nav__drawer-text"> Basket </span>
+        </a>
+      </li>
+      <li>
+        <a href="profiloUtente" class="app-nav__drawer-link">
+          <span class="app-nav__drawer-text"> Account </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- App Nav End -->
+	
+</main>
+<!-- Footer Dark  -->
+<div class="container-fluid px-0">
+  <div class="footer-bottom footer-bottom--dark">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-sm-6">
+        </div>
+        <div class="col-sm-6">
+          <ul class="list list--row flex-wrap justify-content-center justify-content-sm-end mt-2 mt-sm-0 align-items-center" style="--gap: 0.5rem">
+            <li>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer Dark End -->
+
+	
+
 	
 	<!-- jQuery library -->
 <script src="../js/jquery-3.6.0.min.js"></script>
