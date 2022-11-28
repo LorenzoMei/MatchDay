@@ -2421,7 +2421,7 @@ textarea.form--control:focus {
 }
 
 .sports-card__info {
-    width: 55px;
+    width: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -3723,7 +3723,12 @@ textarea.form--control:focus {
         padding-right: 0.3rem;
     }
 
+	.betslip__footer{
+		background-color: whitesmoke;
+	}
+	
     .betslip__footer-list {
+    	background: whitesmoke;
         gap: 0;
     }
 
@@ -5693,14 +5698,27 @@ html, body
 
 .container-quote
 {	
+	
 	border: 0px;
 	border-radius: 12px;
 	background-color:rgb(230, 230, 230);
 	text-align: center;
 	height: 100%;
-    	width: 100%;
+    width: 100%;
 }
 
+
+.container-quote:hover
+{
+	background-color: #007BFF;
+	color:  white;
+}
+
+ .container-quote:focus
+ {
+	background-color: #007BFF;
+	color:  white;
+ }
 a.sport
 {
 	color:white;
