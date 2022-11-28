@@ -55,6 +55,22 @@
 			<div class="col-12">	  
 			  <label for="data" class="form-label">Data:</label>
 			  <input type=datetime-local th:field="*{data}" class="form-control form--control mb-3" id="data" name="data" required/>
+		      <script>
+		      function timestampToDatetimeInputString(timestamp) {
+		    	    const date = new Date((timestamp + _getTimeZoneOffsetInMs()));
+		    	    // slice(0, 19) includes seconds
+		    	    return date.toISOString().slice(0, 19);
+		    	  }
+		    	  
+		    	  function _getTimeZoneOffsetInMs() {
+		    	    return new Date().getTimezoneOffset() * -60 * 1000;
+		    	  }
+
+		    	  document.getElementById('data').min = timestampToDatetimeInputString(Date.now());
+
+		    	  document.getElementById('data').value = timestampToDatetimeInputString(Date.now());
+
+			  </script>
 			</div>
 			
 			<!-- TIPO OK -->
@@ -133,41 +149,45 @@
 				  var quotaOspite = document.getElementById("quotaOspite");
 
 				  if (quotaCasa.value.includes(",")) {
-					    alert("La quota deve essere segnata con un punto ( . ) non virgola ( , )!!!");
+					    alert("La quota della squadra di casa deve essere segnata con un punto ( . ) non virgola ( , ) !!!");
 			            e.preventDefault() ;
 			            returnToPreviousPage();
 					  }
 				  
 				  if (quotaPareggio.value.includes(",")) {
-					    alert("La quota deve essere segnata con un punto ( . ) non virgola ( , )!!!");
+					    alert("La quota del pareggio deve essere segnata con un punto ( . ) non virgola ( , ) !!!");
 			            e.preventDefault() ;
 			            returnToPreviousPage();
 					  }
 				  
 				  if (quotaOspite.value.includes(",")) {
-					    alert("La quota deve essere segnata con un punto ( . ) non virgola ( , )!!!");
+					    alert("La quota della squadra ospite deve essere segnata con un punto ( . ) non virgola ( , ) !!!");
 			            e.preventDefault() ;
 			            returnToPreviousPage();
 					  }
 				  
-				  if (quotaCasa.value == 0) {
-				    alert("La quota della squadra di casa è 0!!!");
-		            e.preventDefault() ;
-		            returnToPreviousPage();
-				  } 
-
-				  if (quotaPareggio.value == 0) {
-					    alert("La quota del pareggio è 0!!!");
+				  if (quotaCasa.value < 1.01) {
+					    alert("La quota della squadra non può essere minore di 1.01 !!!!");
 			            e.preventDefault() ;
 			            returnToPreviousPage();
 					  } 
 
-				  if (quotaOspite.value == 0) {
-					    alert("La quota della squadra ospite è 0!!!");
+				  if (quotaOspite.value < 1.01) {
+					    alert("La quota della squadra ospite non può essere minore di 1.01 !!!!");
 			            e.preventDefault() ;
 			            returnToPreviousPage();
 					  } 
+				  
+				  var tipo = document.getElementById("tipo");
+				  if(tipo == "calcio"){
+					  if (quotaCasa.value < 1.01) {
+						    alert("La quota del pareggio non può essere minore di 1.01 !!!!");
+				            e.preventDefault() ;
+				            returnToPreviousPage();
+						  } 
+				  }
 
+				  
 				  return true;
 				  
 				}
@@ -185,4 +205,6 @@
 
 </body>
 </html>
+
+
 
