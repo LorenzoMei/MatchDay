@@ -61,8 +61,7 @@ public class HomeImpl implements HomeService{
 
 	@Override
 	@PostMapping(value = "gioca", consumes={"application/json","application/json"})
-	public ModelAndView giocaSchedina( @Valid @RequestBody SchedinaAjax schedinaAjax) {
-		ModelAndView mav = new ModelAndView();
+	public String giocaSchedina( @Valid @RequestBody SchedinaAjax schedinaAjax) {
 		String stato = "";
 		
 		//Parsing dati da JSON ad array di oggetti SchedinaGiocata
@@ -81,7 +80,7 @@ public class HomeImpl implements HomeService{
 			utente.setSaldo(newSaldo);
 			
 			//salvataggio della nuova schedina
-			Schedina schedina = new Schedina(importo, utente);
+			Schedina schedina = new Schedina(importo, utente, "attesa");
 			Schedina newSchedina = schedinaRep.save(schedina);
 			
 			//salvataggio di SchedinaEventi con il collegamento tra la schedina ed ogni evento
@@ -99,10 +98,7 @@ public class HomeImpl implements HomeService{
 		else {
 			stato = "Importo non sufficiente";
 		}
-       
-		mav.addObject("stato", stato);
-		mav.setViewName("home");
-		return mav;
+		return stato;
 	}
 	
 	
