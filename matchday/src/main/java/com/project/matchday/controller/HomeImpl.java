@@ -1,31 +1,22 @@
 package com.project.matchday.controller;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.project.matchday.interfaces.EventiRepository;
 import com.project.matchday.interfaces.HomeService;
 import com.project.matchday.interfaces.ProfiloRepository;
-import com.project.matchday.interfaces.ProfiloUtenteService;
 import com.project.matchday.interfaces.SchedinaEventiRepository;
 import com.project.matchday.interfaces.UserRepository;
 import com.project.matchday.model.Evento;
@@ -72,7 +63,9 @@ public class HomeImpl implements HomeService{
 	@PostMapping(value = "gioca", consumes={"application/json","application/json"})
 	public ModelAndView giocaSchedina( @Valid @RequestBody SchedinaAjax schedinaAjax) {
 		ModelAndView mav = new ModelAndView();
-								
+		String stato = "";
+		
+		//Parsing dati da JSON ad array di oggetti SchedinaGiocata
 		Gson gson = new Gson();
 		SchedinaGiocata[] schedinaGiocata = gson.fromJson(schedinaAjax.getSchedinaGiocata(), SchedinaGiocata[].class);
 		
@@ -80,19 +73,34 @@ public class HomeImpl implements HomeService{
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Utente utente = userRep.findByEmail(auth.getName());
 		
-		Schedina schedina = new Schedina(importo, utente);
-		Schedina newSchedina = schedinaRep.save(schedina);
-		
-		for(int i = 0; i < schedinaGiocata.length; i++) {
-			int idEvento = schedinaGiocata[i].getIdEvento();
-			Evento evento = eventiRep.getEventiByIdEvento(idEvento);
-			char giocata = schedinaGiocata[i].getGiocata();
+		//controlla se il saldo dell'utente è maggiore dell'importo giocato
+		if(utente.getSaldo() >= importo) {
 			
-			SchedinaEventi schedinaEventi = new SchedinaEventi(newSchedina, giocata, evento);
-			schedinaEventiRep.save(schedinaEventi);
+			//aggiorna il saldo
+			double newSaldo = utente.getSaldo() - importo;
+			utente.setSaldo(newSaldo);
+			
+			//salvataggio della nuova schedina
+			Schedina schedina = new Schedina(importo, utente);
+			Schedina newSchedina = schedinaRep.save(schedina);
+			
+			//salvataggio di SchedinaEventi con il collegamento tra la schedina ed ogni evento
+			for(int i = 0; i < schedinaGiocata.length; i++) {
+				int idEvento = schedinaGiocata[i].getIdEvento();
+				Evento evento = eventiRep.getEventiByIdEvento(idEvento);
+				char giocata = schedinaGiocata[i].getGiocata();
+				
+				SchedinaEventi schedinaEventi = new SchedinaEventi(newSchedina, giocata, evento);
+				schedinaEventiRep.save(schedinaEventi);
+			}
+			
+			stato = "Schedina giocata con successo";
+		}
+		else {
+			stato = "Importo non sufficiente";
 		}
        
-        System.out.println("FATTO!");
+		mav.addObject("stato", stato);
 		mav.setViewName("home");
 		return mav;
 	}
