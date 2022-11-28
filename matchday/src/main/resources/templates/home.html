@@ -117,7 +117,7 @@
 									</button>
                                 </span>
                             </span>
-                            <span class="sports-card__list-item">
+                            <span class="sports-card__list-item" th:if="${evento.quota.quotaPareggio} != -1.0">
                                 <span class="sports-card__list-name">
                                     X
                                 </span>
@@ -339,8 +339,15 @@
 						contentType: "application/json",
 	                    data: JSON.stringify(data),
 	                    success:function(msg){
-	                    	alert(msg);
-	                    	location.reload();
+	                    	
+	                    	if(msg == "Schedina giocata con successo"){
+	                    		alert(msg);
+		                    	location.reload();
+	                    	}
+	                    	else if(msg == "Importo non sufficiente"){
+	                    		alert(msg);
+	                    	}
+	                    	
 	                    }
 					});
 			}
