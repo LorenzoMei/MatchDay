@@ -76,6 +76,7 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 		}
 	}
 	
+	
 @RequestMapping(value = "profiloUtente")
 	public ModelAndView getProfiloUtente() {
 		
@@ -83,12 +84,20 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 		List<Schedina> schedinaList = visualizzaSchedine();
         Utente utente = visualizzaProfilo();
         Map<Schedina,List<SchedinaEventi>> schedinaEventiList = new HashMap();
+        Map<Schedina,List<Evento>> EventiPerSchedinaList = new HashMap();
+        List<Evento> eventiList = new ArrayList();
+        int i = 0;
         for(Schedina s : schedinaList) {
-        schedinaEventiList.put(s,schedinaEventiRep.getSchedinaEventiBySchedina(s));
+        	schedinaEventiList.put(s,schedinaEventiRep.getSchedinaEventiBySchedina(s));
+        	for(SchedinaEventi se: schedinaEventiList.get(s)) {
+        		eventiList.add(se.getListaEventi());
+        		
+        	}
+        	EventiPerSchedinaList.put(s,eventiList);
         }
         mav.addObject("utente", utente);
         mav.addObject("schedinaList",schedinaList);
-        mav.addObject("schedinaEventiList",schedinaEventiList);
+        mav.addObject("EventiPerSchedinaList",EventiPerSchedinaList);
 		mav.setViewName("profiloUtente");
 	    return mav;	
 	    
