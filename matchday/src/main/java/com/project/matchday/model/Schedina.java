@@ -22,13 +22,15 @@ public class Schedina {
 	@ManyToOne
 	@JoinColumn(name = "fk_utente", referencedColumnName="idutente")
 	private Utente utente;
+	private String esito;
 	
 	public Schedina() {
 	}
 	
-	public Schedina(double importo, Utente utente) {
+	public Schedina(double importo, Utente utente, String esito) {
 		this.importo = importo;
-		this.utente= utente;
+		this.utente = utente;
+		this.esito = esito;
 	}
 	
 	
@@ -55,4 +57,12 @@ public class Schedina {
     public void setUtente(Utente utente) {
 		this.utente = utente;
     }
+
+	public String getEsito() {
+		return esito;
+	}
+
+	public void setEsito(String esito) {
+		this.esito = esito;
+	}
 }
