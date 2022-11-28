@@ -20,6 +20,7 @@ public interface ProfiloUtenteService {
 	String preleva(Double importo);
 	String deposita(Double importo);
 	Utente visualizzaProfilo();
+	List<Evento> getEventiBySchedina(Schedina s);
 
 
 	
