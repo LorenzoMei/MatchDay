@@ -90,6 +90,18 @@ public String deposita( @RequestParam("numDep") Double importo) {
 	userRep.save(utente);
 	return "redirect:profiloUtente";}
 	
+@Override
+public List<Evento> getEventiBySchedina(Schedina s){
+	List<SchedinaEventi> schedinaEventiList = new ArrayList<SchedinaEventi>();
+	List<Evento> eventiList = new ArrayList<Evento>();
+	schedinaEventiList.addAll(schedinaEventiRep.getSchedinaEventiBySchedina(s));
+	for(SchedinaEventi se: schedinaEventiList) {
+		eventiList.add(se.getListaEventi());
+	}
+	return eventiList;
+
+}
+	
 }
 
 	
