@@ -22,5 +22,7 @@ public interface AdminService{
 	
 	public char randomRes(String tipo);
 	
+	public String checkVittoria(ArrayList<SchedinaEventi> listaSchedinaEventiforSchedina);
+	
 	public void generaRisultati();
 }
