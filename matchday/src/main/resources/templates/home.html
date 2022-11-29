@@ -112,7 +112,7 @@
                                     1
                                 </span>
                                 <span class="sports-card__list-count">
-                                    <button class="container-quote" th:id="'quotaCasa' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${#dates.format(evento.data, 'yyyy-MM-dd HH:mm:ss')}]], [[${evento.quota.quotaCasa}]], '1', [[${iter.count}]])">
+                                    <button class="container-quote" th:id="'quotaCasa' + ${evento.idEvento}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${#dates.format(evento.data, 'yyyy-MM-dd HH:mm:ss')}]], [[${evento.quota.quotaCasa}]], '1', [[${evento.idEvento}]])">
 									[[${evento.quota.quotaCasa}]]
 									</button>
                                 </span>
@@ -122,7 +122,7 @@
                                     X
                                 </span>
                                 <span class="sports-card__list-count">
-                                    <button class="container-quote" th:id="'quotaPareggio' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${#dates.format(evento.data, 'yyyy-MM-dd HH:mm:ss')}]], [[${evento.quota.quotaPareggio}]], 'X', [[${iter.count}]])">
+                                    <button class="container-quote" th:id="'quotaPareggio' + ${evento.idEvento}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${#dates.format(evento.data, 'yyyy-MM-dd HH:mm:ss')}]], [[${evento.quota.quotaPareggio}]], 'X', [[${evento.idEvento}]])">
 										[[${evento.quota.quotaPareggio}]]
 									</button>
                                 </span>
@@ -132,7 +132,7 @@
                                     2
                                 </span>
                                 <span class="sports-card__list-count">
-                                    <button class="container-quote" th:id="'quotaOspite' + ${iter.count}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${#dates.format(evento.data, 'yyyy-MM-dd HH:mm:ss')}]], [[${evento.quota.quotaOspite}]], '2', [[${iter.count}]])">
+                                    <button class="container-quote" th:id="'quotaOspite' + ${evento.idEvento}" th:onclick="aggiungiEventoAllaSchedina([[${evento.squadraCasa}]], [[${evento.squadraOspite}]], [[${evento.tipo}]], [[${#dates.format(evento.data, 'yyyy-MM-dd HH:mm:ss')}]], [[${evento.quota.quotaOspite}]], '2', [[${evento.idEvento}]])">
 										[[${evento.quota.quotaOspite}]]
 									</button>
                                 </span>
