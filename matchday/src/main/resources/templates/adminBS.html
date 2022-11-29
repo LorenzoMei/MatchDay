@@ -8,30 +8,61 @@
   <title>MatchDay</title>
  <!-- bootstrap 5  -->
   <link rel="stylesheet" href="../css/lib/bootstrap.min.css" />
+  
+   <!-- Simplebar  -->
+    <link rel="stylesheet" href="../css/lib/simplebar.min.css" />
   <!-- main css -->
   <link rel="stylesheet" href="../css/main.css" />
 </head>
 
 
-<body>
-<!-- Header -->
+<body><!-- Header -->
 <header class="header-primary">
-  <div class="container">
-    <div class="row g-0 align-items-center">
-      <div class="col-5 col-lg-2">
-        <!-- Logo  -->
-        <a href="home" class="logo">
-          MatchDay
-        </a>
-        <!-- Logo End -->
-      </div>
-      <div class="col-7 col-lg-10">
-        <nav class="primary-menu-container">
-        </nav>
-      </div>
-    </div>
-  </div>
-</header>
+	  <div class="container">
+	    <div class="row g-0 align-items-center">
+	      <div class="col-5 col-lg-2">
+	        <!-- Logo  -->
+	        <a href="home" class="logo">
+	          MatchDay
+	        </a>
+	        <!-- Logo End -->
+	      </div>
+	      <div class="col-7 col-lg-10">
+	        <nav class="primary-menu-container">
+	        <ul class="list list--row primary-menu justify-content-end align-items-center">
+	         <li>
+              <div class="custom-dropdown">
+                <div class="custom-dropdown__user" data-set="custom-dropdown">
+                  <img src="/images/user_icon.png" alt="image" class="custom-dropdown__user-img">
+                </div>
+                <div class="custom-dropdown__content custom-dropdown__content-end">
+                  <div class="custom-dropdown__body" data-simplebar>
+                    <ul class="list list--column custom-dropdown__list">
+                      <li>
+                        <a href="profileAdmin" class="custom-dropdown__body-link">
+                          <span class="custom-dropdown__body-text">
+                            Area Personale
+                          </span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="logout" class="custom-dropdown__body-link">
+                          <span class="custom-dropdown__body-text">
+                            Logout
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+	     </nav>    
+	    </div>
+	   </div>
+	  </div>
+	</header>
 <!-- Header End -->
 
 
@@ -110,6 +141,19 @@
     </div>    
   </div>
 </div>
+
+
+
+
+	<!-- jQuery library -->
+<script src="../js/jquery-3.6.0.min.js"></script>
+<!-- bootstrap 5 js -->
+<script src="../js/bootstrap.bundle.min.js"></script>
+<!-- Simplebar  -->
+<script src="../js/simplebar.min.js"></script>
+
+<!-- main js -->
+<script src="../js/app.js"></script>
 
 
 </body>
