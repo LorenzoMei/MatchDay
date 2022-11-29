@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>MatchDay</title>
+ <!-- bootstrap 5  -->
+  <link rel="stylesheet" href="../css/lib/bootstrap.min.css" />
+  <!-- main css -->
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+
+
+<body>
+<!-- Header -->
+<header class="header-primary">
+  <div class="container">
+    <div class="row g-0 align-items-center">
+      <div class="col-5 col-lg-2">
+        <!-- Logo  -->
+        <a href="home" class="logo">
+          MatchDay
+        </a>
+        <!-- Logo End -->
+      </div>
+      <div class="col-7 col-lg-10">
+        <nav class="primary-menu-container">
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Header End -->
+
+
+<!-- Registration page  -->
+<div class="login-page section" style="height:100%">
+  <div class="container">
+    <div class="row g-3 align-items-lg-center justify-content-lg-between">
+      <div class="col-lg-5 col-xl-5 order-1 order-lg-2"></div>
+      <div class="col-lg-2 col-xl-2 order-1 order-lg-2">
+      
+      <input type="button" value="GESTISCI UTENTI" class="btn btn--xl btn--base w-100 btn--xl" style="margin:auto" onclick="window.location.href='adminBS';">       
+      
+      </div>
+      <div class="col-lg-5 col-xl-5 order-1 order-lg-2"></div>
+    </div>    
+  </div>
+
+  <br><br>
+  
+  <div class="container">
+    <div class="row g-3 align-items-lg-center justify-content-lg-between">
+      <div class="col-lg-5 col-xl-5 order-1 order-lg-2"></div>
+      <div class="col-lg-2 col-xl-2 order-1 order-lg-2">
+        
+      <input type="button" value="AGGIUNGI EVENTI" class="btn btn--xl btn--base w-100 btn--xl" style="margin:auto" onclick="window.location.href='addEvent';">
+        
+      </div>
+      <div class="col-lg-5 col-xl-5 order-1 order-lg-2"></div>
+    </div>    
+  </div>
+  
+  <br><br>
+  
+  <div class="container">
+    <div class="row g-3 align-items-lg-center justify-content-lg-between">
+      <div class="col-lg-5 col-xl-5 order-1 order-lg-2"></div>
+      <div class="col-lg-2 col-xl-2 order-1 order-lg-2">
+        
+      <form action="simulazione" method="post">
+      <input type="submit" value="GENERA RISULTATI" class="btn btn--xl btn--base w-100 btn--xl" style="margin:auto">
+      </form> 
+      
+      </div>
+      <div class="col-lg-5 col-xl-5 order-1 order-lg-2"></div>
+    </div>    
+  </div>
+</div>
+
+
+</body>
+</html>
+

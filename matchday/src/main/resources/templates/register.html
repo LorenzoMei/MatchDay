@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>MatchDay</title>
+ <!-- bootstrap 5  -->
+  <link rel="stylesheet" href="../css/lib/bootstrap.min.css" />
+  <!-- main css -->
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+
+
+<body>
+<!-- Header -->
+<header class="header-primary">
+  <div class="container">
+    <div class="row g-0 align-items-center">
+      <div class="col-5 col-lg-2">
+        <!-- Logo  -->
+        <a href="home" class="logo">
+          MatchDay
+        </a>
+        <!-- Logo End -->
+      </div>
+      <div class="col-7 col-lg-10">
+        <nav class="primary-menu-container">
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Header End -->
+
+
+<!-- Registration page  -->
+<div class="login-page section">
+  <div class="container">
+    <div class="row g-3 align-items-lg-center justify-content-lg-between">
+      <div class="col-lg-6 order-2 order-lg-1">
+        <img src="/images/login.png" alt="image" class="login-page__img img-fluid" />
+      </div>
+      <div class="col-lg-6 col-xl-5 order-1 order-lg-2">
+        <div class="login-form">
+          <form action="/register" class="row" method="post" th:action="@{/register}" th:object="${userRegistrationData}">
+            <div class="col-12">
+              <h4 class="login-form__title">Registrati</h4>
+            </div>
+            <div class="col-12">
+              <label for="name" class="form-label">Nome</label>
+              <input type="text" th:field="*{nome}" class="form-control form--control mb-3" id="nome"  required="required"/>
+            </div>
+            <div class="col-12">
+              <label for="cognome" class="form-label">Cognome</label>
+              <input type="text" th:field="*{cognome}" class="form-control form--control mb-3" id="cognome" required="required"/>
+            </div>
+            <div class="col-12">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" th:field="*{email}" class="form-control form--control mb-3" id="email" required="required"/>
+            	<small class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+            </div>
+            <div class="col-12">
+              <label for="password" class="form-label">Password</label>
+              <input id="password" th:field="*{password}" type="password" class="form-control form--control mb-3" required="required"/>
+            </div>
+            <div class="col-12">
+              <div class="mb-3">
+                <div class="form-check">
+                  <input class="form-check-input custom--check" type="checkbox" id="maggiorenne" required="required"/>
+                  <label class="form-check-label sm-text t-heading-font heading-clr fw-md" for="maggiorenne">
+                    Dichiaro di essere maggiorenne
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <input type="submit" name="submit" class="btn btn--xl btn--base w-100 btn--xl" value="REGISTRATI"/> 
+            </div>
+            <div class="col-12 mt-3">
+              <div class="d-flex justify-content-center align-items-center gap-2">
+                <span class="d-inline-block sm-text">Hai già un account? </span>
+                <a href="login" class="t-link d-inline-block text-end t-link--base base-clr sm-text lh-1 text-center">
+                  Fai il Login
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Login page End -->
+
+</body>
+</html>

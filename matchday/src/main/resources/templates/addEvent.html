@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>MatchDay</title>
+ <!-- bootstrap 5  -->
+  <link rel="stylesheet" href="../css/lib/bootstrap.min.css" />
+  <!-- main css -->
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+
+
+<body>
+<!-- Header -->
+<header class="header-primary">
+  <div class="container">
+    <div class="row g-0 align-items-center">
+      <div class="col-5 col-lg-2">
+        <!-- Logo  -->
+        <a href="home" class="logo">
+          MatchDay
+        </a>
+        <!-- Logo End -->
+      </div>
+      <div class="col-7 col-lg-10">
+        <nav class="primary-menu-container">
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Header End -->
+
+
+<!-- Registration page  -->
+<div class="login-page section">
+  <div class="container">
+    <div class="row g-3 align-items-lg-center justify-content-lg-between">
+      <div class="col-lg-3 col-xl-3 order-1 order-lg-2">
+      </div>
+      <div class="col-lg-6 col-xl-5 order-1 order-lg-2">
+      
+        <div class="login-form">
+ 
+		 	<div class="col-12">
+			  <h4 class="login-form__title">AGGIUNGI EVENTO</h4>
+			</div>
+			          
+			<form action="addEvent" method="post" th:action="@{addEvent}" th:object="${registerEventFull}" onsubmit="validateMyForm(event);">
+			
+			<!-- DATA OK -->
+			<div class="col-12">	  
+			  <label for="data" class="form-label">Data:</label>
+			  <input type=datetime-local th:field="*{data}" class="form-control form--control mb-3" id="data" name="data" required/>
+		      <script>
+		      function timestampToDatetimeInputString(timestamp) {
+		    	    const date = new Date((timestamp + _getTimeZoneOffsetInMs()));
+		    	    // slice(0, 19) includes seconds
+		    	    return date.toISOString().slice(0, 19);
+		    	  }
+		    	  
+		    	  function _getTimeZoneOffsetInMs() {
+		    	    return new Date().getTimezoneOffset() * -60 * 1000;
+		    	  }
+
+		    	  document.getElementById('data').min = timestampToDatetimeInputString(Date.now());
+
+		    	  document.getElementById('data').value = timestampToDatetimeInputString(Date.now());
+
+			  </script>
+			</div>
+			
+			<!-- TIPO OK -->
+			<div class="col-12">
+			  <label for="tipologia" class="form-label" onchange="myFunction()">Tipologia:</label>
+			  <select id="tipo" th:field="*{tipo}" name="tipo" required>
+					  <option value="calcio">Calcio</option>
+					  <option value="pallavolo">Pallavolo</option>
+					  <option value="basket">Basket</option>
+			  </select>
+			</div>
+			
+			<!-- CASA OK -->
+			<div class="col-12">
+			  <label for="squadraCasa" class="form-label">Squadra Casa:</label>
+			  <input type="text" th:field="*{squadraCasa}" class="form-control form--control mb-3" id="squadraCasa" required/>
+			</div>
+		
+			<!-- OSPITE OK -->
+			<div class="col-12">
+			  <label for="squadraOspite" class="form-label">Squadra Ospite:</label>
+			  <input type="text" th:field="*{squadraOspite}" class="form-control form--control mb-3" id="squadraOspite" required/>
+			</div>
+			
+			<!-- QUOTE IF CALCIO-->
+			<div class="row" id="quoteIfCalcio">
+				<div class="col-2"></div>
+				<div class="col-1" id="sleepy" style="display:none"></div>
+				<div class="col-2">
+				  <label for="quotaCasa" class="form-label" style="text-align:center;width:100%">1</label>
+				  <input id="quotaCasa" name="quotaCasa" value="0.0" type="text" class="form-control form--control mb-3" style="text-align:center" required/>
+				</div>
+				<div class="col-1"></div>
+				<div class="col-2" id="pareggio">
+				  <label for="quotaPareggio" class="form-label" style="text-align:center;width:100%">X</label>
+				  <input id="quotaPareggio" name="quotaPareggio" value="0.0" type="text" class="form-control form--control mb-3" style="text-align:center" required/>
+				</div>
+				<div class="col-1"></div>
+				<div class="col-2">
+				  <label for="quotaOspite" class="form-label" style="text-align:center;width:100%">2</label>
+				  <input id="quotaOspite" name="quotaOspite" value="0.0" type="text" class="form-control form--control mb-3" style="text-align:center" required/>
+				</div>
+				<div class="col-1" id="sleepy" style="display:none"></div>
+				<div class="col-2"></div>
+			</div>
+			
+			<script>
+			  //   SCRIPT PER GESTIRE IL PAREGGIO
+			  
+			  let checkTipo = document.getElementById("tipo");
+			  var pareggio = document.getElementById("pareggio");
+			  var quotaPareggio = document.getElementById("quotaPareggio");
+			  var sleepy = document.getElementById("sleepy");
+			  
+			  checkTipo.addEventListener( "change", () => {
+			     if ( checkTipo.value == "calcio" ) {
+			    	 quotaPareggio.value = "0.0";
+			    	 pareggio.style.display = "block";
+			    	 sleepy.style.display = "none";
+
+			     } else {
+			    	 quotaPareggio.value = "-1";
+			    	 pareggio.style.display = "none";
+			    	 sleepy.style.display = "block";
+			    	 }
+			  });
+		
+			</script>           		
+			<br>        		
+			<input type="submit" value="AGGIUNGI" class="btn btn--xl btn--base w-100 btn--xl" style="margin:auto">
+			
+			<script>
+			function validateMyForm(e) {
+				  var quotaCasa = document.getElementById("quotaCasa");
+				  var quotaPareggio = document.getElementById("quotaPareggio");
+				  var quotaOspite = document.getElementById("quotaOspite");
+
+				  if (quotaCasa.value.includes(",")) {
+					    alert("La quota della squadra di casa deve essere segnata con un punto ( . ) non virgola ( , ) !!!");
+			            e.preventDefault() ;
+			            returnToPreviousPage();
+					  }
+				  
+				  if (quotaPareggio.value.includes(",")) {
+					    alert("La quota del pareggio deve essere segnata con un punto ( . ) non virgola ( , ) !!!");
+			            e.preventDefault() ;
+			            returnToPreviousPage();
+					  }
+				  
+				  if (quotaOspite.value.includes(",")) {
+					    alert("La quota della squadra ospite deve essere segnata con un punto ( . ) non virgola ( , ) !!!");
+			            e.preventDefault() ;
+			            returnToPreviousPage();
+					  }
+				  
+				  if (quotaCasa.value < 1.01) {
+					    alert("La quota della squadra non può essere minore di 1.01 !!!!");
+			            e.preventDefault() ;
+			            returnToPreviousPage();
+					  } 
+
+				  if (quotaOspite.value < 1.01) {
+					    alert("La quota della squadra ospite non può essere minore di 1.01 !!!!");
+			            e.preventDefault() ;
+			            returnToPreviousPage();
+					  } 
+				  
+				  var tipo = document.getElementById("tipo");
+				  if(tipo == "calcio"){
+					  if (quotaCasa.value < 1.01) {
+						    alert("La quota del pareggio non può essere minore di 1.01 !!!!");
+				            e.preventDefault() ;
+				            returnToPreviousPage();
+						  } 
+				  }
+
+				  
+				  return true;
+				  
+				}
+			</script>
+			</form>
+          
+        </div>
+      </div>
+            <div class="col-lg-3 col-xl-3 order-1 order-lg-2">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
+
+
+
