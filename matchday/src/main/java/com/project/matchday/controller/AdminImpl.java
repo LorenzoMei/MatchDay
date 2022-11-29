@@ -2,8 +2,10 @@ package com.project.matchday.controller;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
 
@@ -11,6 +13,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +39,7 @@ import com.project.matchday.interfaces.SchedinaEventiRepository;
 import com.project.matchday.interfaces.UserRepository;
 
 @Controller
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminImpl implements AdminService{
 	
 	@Autowired	
@@ -48,9 +52,6 @@ public class AdminImpl implements AdminService{
 	private ProfiloRepository schedinaRepository;
 	@Autowired
 	private SchedinaEventiRepository schedinaEventiRepository;
-	@Autowired
-	private ProfiloUtenteService profiloUtenteService;
-    private static final DecimalFormat df = new DecimalFormat("0.00");
 
 	
 	public ArrayList<Utente> visualizzaUtenti(){
@@ -60,13 +61,13 @@ public class AdminImpl implements AdminService{
 	
 	public void banna(String email) {
 		Utente utente = userRepository.findByEmail(email);
-		utente.setStatoAttivo(false);
+		utente.setStato(false);
 		userRepository.save(utente);
 	}
 	
 	public void sbanna(String email) {
 		Utente utente = userRepository.findByEmail(email);
-		utente.setStatoAttivo(true);
+		utente.setStato(true);
 		userRepository.save(utente);
 	}
 	
@@ -157,7 +158,7 @@ public class AdminImpl implements AdminService{
 
 					Utente utente = schedina.getUtente();
 					//prendo la quota finale della schedina
-					double quotaVincita = 0;
+					double quotaVincita = 1;
 					for(SchedinaEventi schedinaEvento: listaSchedinaEventiforSchedina){
 						
 						Evento evento = schedinaEvento.getListaEventi();
@@ -179,9 +180,9 @@ public class AdminImpl implements AdminService{
 					
 					//aggiungo la vincita al conto
 					double saldo = utente.getSaldo();
-			        df.setRoundingMode(RoundingMode.UP);
-					String sf = df.format(saldo+vincita);
-					double saldoFinale = Double.parseDouble(sf); 
+					
+			        
+					double saldoFinale = Math.round(((saldo + vincita) * 100.0)/100.0); 
 					utente.setSaldo(saldoFinale);	
 					userRepository.save(utente);
 				}
@@ -190,7 +191,8 @@ public class AdminImpl implements AdminService{
 	}
 	
 	
-	@GetMapping(value = "adminBS")
+	@GetMapping(value = "/adminBS")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ModelAndView visualizzaTuttiUtenti() {
 		
 		ModelAndView mav = new ModelAndView("adminBS");
@@ -201,7 +203,8 @@ public class AdminImpl implements AdminService{
 		return mav;
 	}
 	
-	@PostMapping(value = "banna")
+	@PostMapping(value = "/banna")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ModelAndView bannaU(@ModelAttribute("email") String email) {
 		
 		banna(email);
@@ -209,7 +212,8 @@ public class AdminImpl implements AdminService{
 		return visualizzaTuttiUtenti();
 	}
 	
-	@PostMapping(value = "sbanna")
+	@PostMapping(value = "/sbanna")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ModelAndView sbannaU(@ModelAttribute("email") String email) {
 		
 		sbanna(email);
@@ -217,7 +221,8 @@ public class AdminImpl implements AdminService{
 		return visualizzaTuttiUtenti();
 	}
 	
-	@GetMapping(value = "addEvent")
+	@GetMapping(value = "/addEvent")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ModelAndView aggiungiEvento() {
 		
 		ModelAndView mav = new ModelAndView("addEvent");
@@ -226,7 +231,8 @@ public class AdminImpl implements AdminService{
 		return mav;
 	}
 	
-	@PostMapping(value = "addEvent")
+	@PostMapping(value = "/addEvent")
+	@PreAuthorize("hasRole('ADMIN')")
     public ModelAndView registraEvento(@ModelAttribute("registerEventFull") AppoggioEvento appoggioEvento, BindingResult bindingResult) {
     	ModelAndView mav = new ModelAndView();
     	
@@ -247,7 +253,8 @@ public class AdminImpl implements AdminService{
     	
     }
 	
-	@GetMapping(value = "simulazione")
+	@GetMapping(value = "/simulazione")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ModelAndView simulazione() {
 		
 		ModelAndView mav = new ModelAndView();
@@ -256,7 +263,8 @@ public class AdminImpl implements AdminService{
 		return mav;
 	}
 	
-	@PostMapping(value = "simulazione")
+	@PostMapping(value = "/simulazione")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ModelAndView simul() {
 		
 		generaRisultati();
