@@ -120,7 +120,7 @@ public double potenzialeVincita( ArrayList<SchedinaEventi> schedinaEventiList, S
 		Evento evento = schedinaEvento.getListaEventi();
 		Quota quota = evento.getQuota();
 		float quotaGiocata;
-		System.out.println(schedinaEvento.getGiocata());
+		
 		if (schedinaEvento.getGiocata() == '1') {
 			quotaGiocata = quota.getQuotaCasa();
 		} else if (schedinaEvento.getGiocata() == '2') {
