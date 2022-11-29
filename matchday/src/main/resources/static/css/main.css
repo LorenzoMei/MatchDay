@@ -5737,3 +5737,10 @@ div.card-shadow{
     width: 100%;
 }
 /*# sourceMappingURL=main.css.map */
+
+div.scroll{
+	
+	width: 80%;
+	height: 60%;
+    overflow: auto;
+}
