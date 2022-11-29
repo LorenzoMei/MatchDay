@@ -96,7 +96,7 @@
       <div class="col-lg-5 col-xl-5 order-1 order-lg-2"></div>
       <div class="col-lg-2 col-xl-2 order-1 order-lg-2">
         
-      <form action="/simulazione" method="post">
+   <form action="/simulazione" method="post" onsubmit="validateMyForm(event);">
       <input type="submit" value="GENERA RISULTATI" class="btn btn--xl btn--base w-100 btn--xl" style="margin:auto">
       </form> 
       
@@ -105,6 +105,14 @@
     </div>    
   </div>
 </div>
+
+			<script>
+			function validateMyForm(e) {
+				  
+				  alert("Generazione Risultati effettuata con successo!!!!");
+				  return true;  
+				}
+			</script>
 
 
 
