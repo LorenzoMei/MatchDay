@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService{
             return null;
         }
     	user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setStatoAttivo(true);
+        user.setStato(true);
         user.setRole(UserRoles.USER.name());
         user.setSaldo(0.00);
         
