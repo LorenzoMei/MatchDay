@@ -47,7 +47,7 @@
         
             <div class="col-12">
             	<div id="errors" class="text-danger" th:if="${(param.error != null) and (param.error[0] == 'true')}">
-                        Invalid email or password
+                        Email e/o Password errati oppure Utente Bannato!
              	</div>
             </div>
             <form method="POST" class="row" id="login-form" th:action="@{/login}">
