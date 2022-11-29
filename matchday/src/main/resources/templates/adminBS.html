@@ -84,7 +84,7 @@
 			            <th width=10%></th>  
 		            </tr>
 				<th:block th:each="utente : ${listaUtenti}">
-					<tr th:if="${utente.isStatoAttivo}">
+					<tr th:if="${utente.getStato}">
 			            <td th:text=${utente.nome}>   </td>
 			            <td th:text=${utente.cognome}>  </td>
 			            <td th:text=${utente.email} th:name="email">   </td>
@@ -121,7 +121,7 @@
 			            <th width=10%></th>  
 		            </tr>
 				<th:block th:each="utente : ${listaUtenti}">
-					<tr th:if="${!utente.isStatoAttivo}">
+					<tr th:if="${!utente.getStato}">
 			            <td th:text=${utente.nome}>   </td>
 			            <td th:text=${utente.cognome}>  </td>
 			            <td th:text=${utente.email} th:name="email">   </td>
