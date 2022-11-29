@@ -75,13 +75,16 @@ public class Utente {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
-	public boolean isStatoAttivo() {
+	
+	public boolean isStato() {
+		return stato;
+	}
+	
+	public boolean getStato() {
 		return stato;
 	}
 
-	public void setStatoAttivo(boolean stato) {
+	public void setStato(boolean stato) {
 		this.stato = stato;
 	}
 
