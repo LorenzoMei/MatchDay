@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import com.project.matchday.model.EffettuaOperazioni;
 import com.project.matchday.model.Evento;
+import com.project.matchday.model.Quota;
 import com.project.matchday.model.Schedina;
 import com.project.matchday.model.SchedinaEventi;
 import com.project.matchday.model.Utente;
@@ -70,14 +71,9 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	public ModelAndView getProfiloUtente() {
 		
 		ModelAndView mav = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	Utente user = userRep.findByEmail(auth.getName());
-	if(user.getRole().equalsIgnoreCase("ADMIN")) {
-		mav.setViewName("profileAdmin");
-		return mav;
-	}
 		List<Schedina> schedinaList = visualizzaSchedine();
         Utente utente = visualizzaProfilo();  
+        ArrayList<Float> vincitaList= new ArrayList<Float>();
         Map<Schedina,List<Evento>> eventiPerSchedinaList = new HashMap<Schedina,List<Evento>>();
         Map<Schedina,List<SchedinaEventi>> schedinaEventiPerSchedinaList = new HashMap<Schedina,List<SchedinaEventi>>();
        
@@ -85,7 +81,9 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
         ArrayList<SchedinaEventi> schedinaEventiList = new ArrayList<SchedinaEventi>();
         	schedinaEventiList.addAll(schedinaEventiRep.getSchedinaEventiBySchedina(schedinaList.get(i)));
         	schedinaEventiPerSchedinaList.put(schedinaList.get(i), schedinaEventiList);
-      
+            double vincita = potenzialeVincita( schedinaEventiList,schedinaList.get(i));
+            vincitaList.add((float) vincita);
+        
         	for(int k = 0; k< schedinaEventiList.size(); k++) {
         		ArrayList<Evento> eventiList = new ArrayList<Evento>();
         		for( int s = 0; s< schedinaEventiList.size(); s++ ) {
@@ -94,7 +92,7 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
         		eventiPerSchedinaList.put(schedinaList.get(i), eventiList);
         		}
         } 
-
+        mav.addObject("vincitaList", vincitaList);
         mav.addObject("schedinaEventiPerSchedinaList",schedinaEventiPerSchedinaList);
         mav.addObject("utente", utente);
         mav.addObject("schedinaList",schedinaList);
@@ -106,6 +104,30 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	    return mav;	
 	    
 	}
+
+public double potenzialeVincita( ArrayList<SchedinaEventi> schedinaEventiList, Schedina schedina){
+
+	//prendo la quota finale della schedina
+	double quotaVincita = 1;
+	for(SchedinaEventi schedinaEvento: schedinaEventiList){
+		
+		Evento evento = schedinaEvento.getListaEventi();
+		Quota quota = evento.getQuota();
+		float quotaGiocata;
+		System.out.println(schedinaEvento.getGiocata());
+		if (schedinaEvento.getGiocata() == '1') {
+			quotaGiocata = quota.getQuotaCasa();
+		} else if (schedinaEvento.getGiocata() == '2') {
+			quotaGiocata = quota.getQuotaOspite();
+		} else {
+			quotaGiocata = quota.getQuotaPareggio();
+		}
+		quotaVincita =  quotaVincita*quotaGiocata;
+	}
+//calcolo la vincita
+double vincita = quotaVincita * schedina.getImporto();
+ return vincita; 
+}
 
 @Override
 @ResponseBody
@@ -137,6 +159,3 @@ return "Deposito avvenuto con successo";
 
 
 }
-
-	
-
