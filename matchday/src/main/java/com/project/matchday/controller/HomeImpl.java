@@ -86,7 +86,7 @@ public class HomeImpl implements HomeService{
 		Utente utente = userRep.findByEmail(auth.getName());
 		
 		//controlla se il saldo dell'utente è maggiore dell'importo giocato
-		if(utente.getSaldo() >= importo) {
+		if(utente.getSaldo() >= importo && utente.getStato()) {
 			
 			//aggiorna il saldo
 			double newSaldo = utente.getSaldo() - importo;
@@ -109,7 +109,7 @@ public class HomeImpl implements HomeService{
 			stato = "Schedina giocata con successo";
 		}
 		else {
-			stato = "Importo non sufficiente";
+			stato = "Importo non sufficiente o utente bannato!";
 		}
 		return stato;
 	}
