@@ -71,6 +71,12 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
 	public ModelAndView getProfiloUtente() {
 		
 		ModelAndView mav = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	Utente user = userRep.findByEmail(auth.getName());
+	if(user.getRole().equalsIgnoreCase("ADMIN")) {
+		mav.setViewName("profileAdmin");
+		return mav;
+	}
 		List<Schedina> schedinaList = visualizzaSchedine();
         Utente utente = visualizzaProfilo();  
         ArrayList<Float> vincitaList= new ArrayList<Float>();
