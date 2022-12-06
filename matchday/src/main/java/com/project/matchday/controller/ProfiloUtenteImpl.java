@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import com.project.matchday.model.EffettuaOperazioni;
 import com.project.matchday.model.Evento;
 import com.project.matchday.model.Quota;
 import com.project.matchday.model.Schedina;
@@ -103,8 +102,6 @@ public class ProfiloUtenteImpl implements ProfiloUtenteService {
         mav.addObject("utente", utente);
         mav.addObject("schedinaList",schedinaList);
         mav.addObject("eventiPerSchedinaList",eventiPerSchedinaList);
-        mav.addObject("deposito",new EffettuaOperazioni());
-        mav.addObject("prelievo",new EffettuaOperazioni());
 		mav.setViewName("profiloUtente");
 		
 	    return mav;	
