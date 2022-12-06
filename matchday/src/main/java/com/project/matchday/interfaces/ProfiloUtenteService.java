@@ -7,8 +7,6 @@ import com.project.matchday.model.Utente;
 import java.util.List;
 
 import javax.validation.Valid;
-
-import com.project.matchday.model.EffettuaOperazioni;
 import com.project.matchday.model.Schedina;
 
 
